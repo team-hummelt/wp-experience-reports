@@ -272,6 +272,7 @@ final class WWDH_Api_Ajax
                 $err_msg = '';
                 if (!$extension) {
                     do_action($this->basename.'/download_extension_previews');
+
                     $extDir = $this->main->get_extension_preview();
                     $extension = $extensionOptions->read_wwdh_folder($extDir);
                     if(!$extension){

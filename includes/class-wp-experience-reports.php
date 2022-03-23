@@ -17,6 +17,7 @@ use Experience\Reports\Experience_Report_Extensions;
 use Experience\Reports\Experience_Reports_Block_Callback;
 use Experience\Reports\Experience_Reports_Database;
 use Experience\Reports\Experience_Reports_Public_API;
+use Experience\Reports\Register_Api_WP_Remote;
 use Experience\Reports\Register_Experience_Reports_Endpoint;
 use Experience\Reports\Register_Experience_Reports_Gutenberg_Patterns;
 use Experience\Reports\Register_Experience_Reports_Gutenberg_Tools;
@@ -506,6 +507,7 @@ class Wp_Experience_Reports
         if (!get_option('hupa_server_url')) {
             update_option('hupa_server_url', $this->get_license_config()->api_server_url);
         }
+
         global $product_license;
         $product_license = new Register_Product_License($this->get_plugin_name(), $this->get_version(), $this->get_license_config(), $this->main);
         $this->loader->add_action('init', $product_license, 'license_site_trigger_check');

@@ -73,13 +73,9 @@ class Experience_Reports_Public_API
 
 
     /**
-     * @param string $command
-     * @param string $api_url
-     * @param array $addBody
-     * @return object
      * @throws Exception
      */
-    public function wwdh_get_public_resource_method(string $command, string $api_url = '', array $addBody = []): object
+    public function wwdh_get_public_resource_method($command, $api_url = '', $addBody = []): object
     {
 
         if (!get_option('extension_access_token')) {
@@ -341,11 +337,8 @@ class Experience_Reports_Public_API
         return $apiResponse;
     }
 
-    /**
-     * @param int $get_id
-     * @return object
-     */
-    public function wwdh_public_api_select_commands(int $get_id = 0): object
+
+    public function wwdh_public_api_select_commands($get_id = 0): object
     {
 
         global $plugin_helper;
