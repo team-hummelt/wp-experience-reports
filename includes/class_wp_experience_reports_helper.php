@@ -259,6 +259,7 @@ class WP_Experience_Reports_Helper
 
         $url = get_option($this->basename . '-api-options')['public_api_resource_url'];
         $api = apply_filters('get_public_resource_method', 'get_extensions', $url);
+
         if (isset($api->status) && $api->status) {
             if (isset($api->data) && !empty($api->data)) {
                 foreach ($api->data as $tmp) {

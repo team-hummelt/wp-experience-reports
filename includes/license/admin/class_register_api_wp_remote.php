@@ -72,6 +72,7 @@ class Register_Api_WP_Remote {
 	public function init_register_license_wp_remote_api() {
 		add_filter( 'get_license_api_urls', array( $this, 'hupa_license_api_urls' ) );
 	//	add_filter( "$this->basename/resource_authorization_code", array( $this, 'Activate_By_Authorization_Code' ) );
+
 	}
 
 	public function hupa_license_api_urls( $scope ): string {
