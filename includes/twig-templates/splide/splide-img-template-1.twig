@@ -1,0 +1,10 @@
+{% for img in d.images %}
+    <div class="splide__slide">
+        <a {% if d.post.gallery_image_option == 2 %} href="{{ img.src_full }}" data-control="single"{% endif %}
+           {% if d.post.gallery_image_option == 3 %} href="{{ img.attachment_url }}" target="_blank"{% endif %}
+           class="{% if d.post.gallery_image_option == 2 %}img-link{% endif %} slider-href-link w-100 h-100 d-block position-relative" title="{{ img.title }}">
+            <img class="splide-img" alt="{{ d.post.alt }}" data-splide-lazy="{{ img.src }}" src="{{ img.src }}"/>
+        </a>
+    </div>
+{% endfor %}
+

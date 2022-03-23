@@ -1,0 +1,838 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2022-03-15 11:42+0100\n"
+"PO-Revision-Date: 2022-03-15 11:43+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;esc_html;esc_html__;esc_att;esc_attr__;"
+"esc_attr_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: admin/js\n"
+"X-Poedit-SearchPathExcluded-1: includes/tools\n"
+"X-Poedit-SearchPathExcluded-2: includes/Twig\n"
+
+#: admin/ajax/class_wwdh_api_ajax.php:508
+#: admin/ajax/class_wwdh_api_ajax.php:513
+#: includes/api/api-classes/class_experience_reports_public_api.php:416
+msgid "Server Response"
+msgstr "Server Antwort"
+
+#: admin/ajax/class_wwdh_api_ajax.php:545
+#: admin/ajax/class_wwdh_api_ajax.php:552
+#: includes/api/api-classes/trait_extension_defaults.php:89
+msgid "at"
+msgstr "um"
+
+#: admin/ajax/class_wwdh_api_ajax.php:545
+#: admin/ajax/class_wwdh_api_ajax.php:552
+#: includes/api/api-classes/trait_extension_defaults.php:90
+msgid "Clock"
+msgstr "Uhr"
+
+#: admin/ajax/class_wwdh_api_ajax.php:549
+#: includes/api/api-classes/trait_extension_defaults.php:88
+msgid "Months"
+msgstr "Monate"
+
+#: admin/ajax/class_wwdh_api_ajax.php:549
+#: includes/api/api-classes/trait_extension_defaults.php:87
+msgid "Month"
+msgstr "Monat"
+
+#: admin/ajax/class_wwdh_api_ajax.php:554
+#: admin/ajax/class_wwdh_api_ajax.php:555
+#: admin/ajax/class_wwdh_api_ajax.php:559
+#: admin/ajax/class_wwdh_api_ajax.php:565
+#: includes/api/api-classes/trait_extension_defaults.php:91
+msgid "unlimited"
+msgstr "unbegrenzt"
+
+#: admin/ajax/class_wwdh_api_ajax.php:563
+#: includes/api/api-classes/trait_extension_defaults.php:92
+msgid "Installations"
+msgstr "Installationen"
+
+#: admin/ajax/class_wwdh_api_ajax.php:563
+#: includes/api/api-classes/trait_extension_defaults.php:93
+msgid "Installation"
+msgstr "Installation"
+
+#: admin/class-wp-experience-reports-admin.php:96
+#: admin/class-wp-experience-reports-admin.php:127
+#: admin/partials/wp-experience-reports-admin-display.php:21
+#: admin/partials/wp-experience-reports-admin-display.php:25
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:27
+#: includes/class-wp-experience-reports-activator.php:49
+msgid "Experience Reports"
+msgstr ""
+
+#: admin/class-wp-experience-reports-admin.php:97
+msgid "Experience"
+msgstr ""
+
+#: admin/class-wp-experience-reports-admin.php:106
+#: admin/class-wp-experience-reports-admin.php:107
+#: extensions/installed/experience-reports-gallery/admin/class-post-selector-admin.php:68
+#: extensions/installed/experience-reports-gallery/admin/class-post-selector-admin.php:78
+#: extensions/installed/experience-reports-gallery/admin/class-post-selector-admin.php:79
+msgid "Reports Gallery"
+msgstr "Reports Galerie"
+
+#: admin/class-wp-experience-reports-admin.php:116
+#: admin/class-wp-experience-reports-admin.php:117
+#: admin/partials/wp-experience-reports-extension-display.php:7
+#: admin/partials/wp-experience-reports-extension-display.php:20
+#: extensions/installed/experience-reports-gallery/admin/class-post-selector-admin.php:88
+#: extensions/installed/experience-reports-gallery/admin/class-post-selector-admin.php:89
+msgid "Extensions"
+msgstr "Erweiterungen"
+
+#: admin/class-wp-experience-reports-admin.php:126
+msgid "Experience Reports Settings"
+msgstr ""
+
+#: admin/class-wp-experience-reports-admin.php:159
+#: admin/partials/wp-experience-reports-options-display.php:7
+#: admin/partials/wp-experience-reports-options-display.php:13
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:100
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: admin/partials/wp-experience-reports-admin-display.php:26
+#: admin/partials/wp-experience-reports-admin-display.php:31
+msgid "Gallery Slider"
+msgstr "Galerie Slider"
+
+#: admin/partials/wp-experience-reports-admin-display.php:38
+msgid "Report Gallery Slider"
+msgstr "Report Galerie Slider"
+
+#: admin/partials/wp-experience-reports-admin-display.php:41
+#: admin/partials/wp-experience-reports-admin-display.php:47
+msgid "Report Gallery"
+msgstr "Report Galerie"
+
+#: admin/partials/wp-experience-reports-admin-display.php:59
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:60
+msgid "Experience Reports Gallery Slider"
+msgstr "Experience Reports Galerie Slider"
+
+#: admin/partials/wp-experience-reports-admin-display.php:66
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:67
+msgid "add Slider"
+msgstr "Slider hinzufügen"
+
+#: admin/partials/wp-experience-reports-admin-display.php:71
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:72
+msgid "add Demo"
+msgstr "Demo hinzufügen"
+
+#: admin/partials/wp-experience-reports-admin-display.php:77
+msgid "Experience Reports Gallery not installed."
+msgstr "Experience Reports Galerie nicht installiert."
+
+#: admin/partials/wp-experience-reports-extension-display.php:7
+#: admin/partials/wp-experience-reports-options-display.php:7
+msgid "WP-Experience Reports"
+msgstr "WP-Experience Reports"
+
+#: admin/partials/wp-experience-reports-extension-display.php:14
+msgid "Extensions are being updated and will be available again shortly."
+msgstr ""
+"Die Erweiterungen werden derzeit aktualisiert und sind in Kürze wieder "
+"verfügbar."
+
+#: admin/partials/wp-experience-reports-extension-display.php:21
+msgid "Overview"
+msgstr "Übersicht"
+
+#: admin/partials/wp-experience-reports-extension-display.php:24
+#: includes/api/api-classes/trait_extension_defaults.php:71
+msgid "back to the overview"
+msgstr "zurück zur Übersicht"
+
+#: admin/partials/wp-experience-reports-options-display.php:20
+msgid "Minimum requirement for using this Plugin"
+msgstr "Mindestvoraussetzung für die Verwendung dieses Plugins"
+
+#: admin/partials/wp-experience-reports-options-display.php:29
+msgid "User Role"
+msgstr "Benutzerrolle"
+
+#: extensions/installed/experience-reports-gallery/admin/class-post-selector-admin.php:69
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/components/galerieTypes.js:58
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:43
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:49
+msgid "Gallery"
+msgstr "Galerie"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/components/galerieTypes.js:58
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/components/galerieTypes.js:61
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/CatSelect.js:43
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:97
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:111
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:125
+msgid "select"
+msgstr "auswählen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/components/galerieTypes.js:63
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/CatSelect.js:45
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:99
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:113
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:127
+msgid "loading"
+msgstr "loading"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:31
+msgid "Post selector 2 gallery"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:52
+msgid " Gutenberg Galerie BY Jens Wiecker"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:53
+msgid "Gutenberg POST Selector Galerie"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:104
+msgid "Headline for widget:"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:108
+msgid "Relevant for Gutenberg widgets only."
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:117
+msgid "Colors for hover box"
+msgstr "Farben für Hover-Box"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:121
+msgid "Hover text color"
+msgstr "Farbe des Hover-Textes"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:131
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:657
+msgid "Hover background color"
+msgstr "Hover-Hintergrundfarbe"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/galerie-data/src/index.js:145
+msgid "Post selector 2 gallery "
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/CatSelect.js:39
+msgid "Select category"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostList.js:14
+msgid "Loading posts"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostList.js:20
+msgid "Your query yielded no results, please try again."
+msgstr "Ihre Anfrage ergab keine Ergebnisse, bitte versuchen Sie es erneut."
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostList.js:28
+msgid "Your query yielded no results, please try again., please try again."
+msgstr "Ihre Anfrage ergab keine Ergebnisse, bitte versuchen Sie es erneut."
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostList.js:34
+msgid "no posts selected"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostList.js:43
+msgid "Loading"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostList.js:43
+msgid "load more"
+msgstr "mehr laden"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostSelector.js:290
+msgid "Close selection"
+msgstr "Auswahl schließen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostSelector.js:290
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostSelector.js:323
+msgid "Add contributions"
+msgstr "Beiträge hinzufügen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostSelector.js:296
+#, fuzzy
+#| msgid "Type"
+msgid "Post Type"
+msgstr "Typ"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostSelector.js:307
+msgid "Search contribution"
+msgstr "Beitrag suchen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostSelector.js:313
+msgid "Please enter your search query..."
+msgstr "Bitte geben Sie Ihre Suchanfrage ein..."
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/PostSelector.js:339
+msgid "selected posts"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:93
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:447
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:28
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:33
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:40
+#, fuzzy
+#| msgid "add Slider"
+msgid "Slider"
+msgstr "Slider hinzufügen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:93
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:107
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:121
+msgid "Select template:"
+msgstr "Vorlage auswählen:"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:107
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:448
+msgid "Grid"
+msgstr "Grid"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/components/hupaData.js:121
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:449
+msgid "News"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:39
+msgid "Post Selector 2"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:148
+msgid " gutenberg post selector BY Jens Wiecker"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:149
+msgid "Gutenberg GRID SLIDER"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:412
+msgid "Output Settings"
+msgstr "Ausgabe-Einstellungen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:427
+msgid "Number of posts:"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:434
+msgid "Only relevant for category selection."
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:439
+msgid "Output type"
+msgstr "Ausgangstyp"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:470
+msgid "Issue order"
+msgstr "Reihenfolge der Ausgabe"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:478
+msgid "Position"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:479
+msgid "Date"
+msgstr "Datum"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:486
+msgid "Sort"
+msgstr "Sortieren"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:508
+msgid "View"
+msgstr "Ansicht"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:512
+msgid "Show link to post"
+msgstr "Link zum Beitrag anzeigen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:517
+msgid "Show post title"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:522
+msgid "post title link (to post)"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:527
+msgid "Show post image"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:533
+msgid "Lightbox active"
+msgstr "Lightbox aktiv"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:540
+msgid "Image Link"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:548
+msgid "Image"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:549
+msgid "attachment"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:550
+msgid "extra url"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:558
+msgid "Extra url only relevant for news selection."
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:567
+#, fuzzy
+#| msgid "Settings"
+msgid "News settings"
+msgstr "Einstellungen"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:571
+msgid "Show categories"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:576
+msgid "Show author"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:581
+msgid "Show date"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:588
+msgid "Link in new window"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:593
+msgid "Only relevant for extra url."
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:599
+msgid "Output content"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:608
+msgid "Excerpt"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:609
+msgid "Content"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:610
+msgid "Empty"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:620
+msgid "News Pagination"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:623
+#, fuzzy
+#| msgid "not activated"
+msgid "Pagination active"
+msgstr "nicht aktiviert"
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:629
+msgid "Number of posts per page:"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:635
+msgid "Only relevant for output type News."
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:643
+msgid "Colors"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:647
+msgid "Text color"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/gutenberg/post-selector-data/src/index.js:673
+msgid "Select posts"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/admin/partials/post-selector-admin-display.php:23
+msgid "Experience Reports Gallery"
+msgstr ""
+
+#: extensions/installed/experience-reports-gallery/includes/templates/class_post_selector_news_template.php:201
+#: extensions/installed/experience-reports-gallery/includes/templates/class_post_selector_news_template.php:267
+#: extensions/installed/experience-reports-gallery/includes/templates/class_post_selector_news_template.php:317
+#: extensions/installed/experience-reports-gallery/includes/templates/class_post_selector_news_template.php:386
+msgid "by"
+msgstr "von"
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:396
+msgid "Public API command execute"
+msgstr ""
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:397
+msgid "Public API command"
+msgstr ""
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:398
+msgid "Support ID"
+msgstr ""
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:399
+msgid "Support Password"
+msgstr ""
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:400
+msgid "Execute command"
+msgstr ""
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:401
+msgid "execute"
+msgstr "ausführen"
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:402
+msgid "cancel"
+msgstr "abbrechen"
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:403
+msgid "Reset Public API Settings"
+msgstr ""
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:410
+msgid "An error has occurred. <b>All input fields</b> must be filled in."
+msgstr ""
+"Es ist ein Fehler aufgetreten. <b>Alle Eingabefelder</b> müssen ausgefüllt "
+"werden."
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:412
+msgid "An error has occurred. No connection to the server can be established."
+msgstr ""
+"Es ist ein Fehler aufgetreten. Es kann keine Verbindung zum Server "
+"hergestellt werden."
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:414
+msgid "An error has occurred. Invalid server response."
+msgstr "Es ist ein Fehler aufgetreten. Ungültige Server-Antwort."
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:418
+msgid "An error has occurred."
+msgstr "Es ist ein Fehler aufgetreten."
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:420
+msgid "Wrong licence format. Licence is invalid!"
+msgstr "Falsches Lizenzformat. Die Lizenz ist ungültig!"
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:426
+msgid "The command was executed successfully."
+msgstr "Der Befehl wurde erfolgreich ausgeführt."
+
+#: includes/api/api-classes/class_experience_reports_public_api.php:428
+msgid "Action successfully executed."
+msgstr "Aktion erfolgreich durchgeführt."
+
+#: includes/api/api-classes/class_wwdh_extension_api.php:79
+msgid "License ID is empty."
+msgstr "Die Lizenz-ID ist leer."
+
+#: includes/api/api-classes/class_wwdh_extension_api.php:90
+msgid "Invalid server response."
+msgstr "Ungültige Serverantwort."
+
+#: includes/api/api-classes/trait_extension_defaults.php:60
+msgid "Extension"
+msgstr "Erweiterung"
+
+#: includes/api/api-classes/trait_extension_defaults.php:61
+msgid "Plugin for"
+msgstr "Plugin für"
+
+#: includes/api/api-classes/trait_extension_defaults.php:62
+msgid "Status"
+msgstr ""
+
+#: includes/api/api-classes/trait_extension_defaults.php:63
+msgid "details"
+msgstr "Details"
+
+#: includes/api/api-classes/trait_extension_defaults.php:64
+msgid "download"
+msgstr "Download"
+
+#: includes/api/api-classes/trait_extension_defaults.php:65
+#: includes/license/partials/license-activate-product.php:43
+msgid "activate"
+msgstr "aktivieren"
+
+#: includes/api/api-classes/trait_extension_defaults.php:66
+msgid "Activates"
+msgstr "Aktiviert"
+
+#: includes/api/api-classes/trait_extension_defaults.php:67
+msgid "activates"
+msgstr "aktiviert"
+
+#: includes/api/api-classes/trait_extension_defaults.php:68
+msgid "deactivated"
+msgstr "deaktiviert"
+
+#: includes/api/api-classes/trait_extension_defaults.php:69
+msgid "license"
+msgstr "Lizenz"
+
+#: includes/api/api-classes/trait_extension_defaults.php:70
+msgid "Licence details"
+msgstr "Details zur Lizenz"
+
+#: includes/api/api-classes/trait_extension_defaults.php:72
+msgid "Licence for"
+msgstr "Lizenz für"
+
+#: includes/api/api-classes/trait_extension_defaults.php:73
+msgid "Licence"
+msgstr "Lizenz"
+
+#: includes/api/api-classes/trait_extension_defaults.php:74
+msgid "Activation-code"
+msgstr "Aktivierungscode"
+
+#: includes/api/api-classes/trait_extension_defaults.php:75
+msgid "copies"
+msgstr "Kopien"
+
+#: includes/api/api-classes/trait_extension_defaults.php:76
+msgid "copy"
+msgstr "kopiert"
+
+#: includes/api/api-classes/trait_extension_defaults.php:77
+msgid "Time limit"
+msgstr "Zeitliche Begrenzung"
+
+#: includes/api/api-classes/trait_extension_defaults.php:78
+msgid "Url-Limit"
+msgstr "Url-Begrenzung"
+
+#: includes/api/api-classes/trait_extension_defaults.php:79
+msgid "Licence start"
+msgstr "Beginn der Lizenz"
+
+#: includes/api/api-classes/trait_extension_defaults.php:80
+msgid "Licence end"
+msgstr "Ende der Lizenz"
+
+#: includes/api/api-classes/trait_extension_defaults.php:81
+msgid "Version"
+msgstr "Version"
+
+#: includes/api/api-classes/trait_extension_defaults.php:82
+msgid "Extension for"
+msgstr "Erweiterung für"
+
+#: includes/api/api-classes/trait_extension_defaults.php:83
+msgid "File size"
+msgstr "Größe der Datei"
+
+#: includes/api/api-classes/trait_extension_defaults.php:84
+msgid "Type"
+msgstr "Typ"
+
+#: includes/api/api-classes/trait_extension_defaults.php:85
+msgid "PHP Min"
+msgstr ""
+
+#: includes/api/api-classes/trait_extension_defaults.php:86
+msgid "WP Min"
+msgstr ""
+
+#: includes/api/api-classes/trait_extension_defaults.php:94
+msgid "URL Licence"
+msgstr "URL-Lizenz"
+
+#: includes/api/api-classes/trait_extension_defaults.php:95
+msgid "not activated"
+msgstr "nicht aktiviert"
+
+#: includes/class-wp-experience-reports-activator.php:50
+msgid "Experience Reports Posts"
+msgstr "Experience Reports Beiträge"
+
+#: includes/class-wp-experience-reports-activator.php:51
+msgid "Edit Experience Reports Post"
+msgstr "Experience Reports Beitrag bearbeiten"
+
+#: includes/class-wp-experience-reports-activator.php:52
+msgid "Experience Reports Posts navigation"
+msgstr "Experience Reports Posts navigation"
+
+#: includes/class-wp-experience-reports-activator.php:53
+msgid "Add new post"
+msgstr "Neuen Beitrag schreiben"
+
+#: includes/class-wp-experience-reports-activator.php:54
+msgid "Experience Reports Posts Archives"
+msgstr "Experience Reports Beiträge Archiv"
+
+#: includes/class-wp-experience-reports-activator.php:85
+#: includes/class-wp-experience-reports-activator.php:95
+msgid "Experience Reports Categories"
+msgstr "Experience Reports Kategorien"
+
+#: includes/class-wp-experience-reports-activator.php:86
+msgid "Experience Reports Category"
+msgstr "Experience Reports Kategorie"
+
+#: includes/class-wp-experience-reports-activator.php:87
+msgid "Search Experience Reports Categories"
+msgstr "Experience Reports Kategorie suche"
+
+#: includes/class-wp-experience-reports-activator.php:88
+msgid "All Experience Reports Categories"
+msgstr "Alle Experience Reports Kategorien"
+
+#: includes/class-wp-experience-reports-activator.php:89
+msgid "Parent Experience Reports Category"
+msgstr "Experience Reports Eltern Kategorie"
+
+#: includes/class-wp-experience-reports-activator.php:90
+msgid "Parent TExperience Reports Category:"
+msgstr "Experience Reports Eltern Kategorie:"
+
+#: includes/class-wp-experience-reports-activator.php:91
+msgid "Edit Experience Reports Category"
+msgstr "Experience Reports Kategorie bearbeiten"
+
+#: includes/class-wp-experience-reports-activator.php:92
+msgid "Update Experience Reports Category"
+msgstr "Update Experience Reports Kategorie"
+
+#: includes/class-wp-experience-reports-activator.php:93
+msgid "Add New Experience Reports Category"
+msgstr "neue Experience Reports Kategorie hinzufügen"
+
+#: includes/class-wp-experience-reports-activator.php:94
+msgid "New Experience Reports Category"
+msgstr "Neue Experience Reports Kategorie"
+
+#: includes/class-wp-experience-reports-activator.php:116
+msgid "Standard category for Experience Reports posts"
+msgstr "Standardkategorie für Experience Reports Beiträge"
+
+#: includes/class-wp-experience-reports.php:381
+#, php-format
+msgid ""
+"This plugin has been disabled because it requires a PHP version greater than "
+"%s and a WordPress version greater than %s. Your PHP version can be updated "
+"by your hosting provider."
+msgstr ""
+"Dieses Plugin wurde deaktiviert, weil es eine PHP-Version größer als %s und "
+"eine WordPress-Version größer als %s benötigt. Ihre PHP-Version kann von "
+"Ihrem Hosting-Anbieter aktualisiert werden."
+
+#: includes/class_wp_experience_reports_helper.php:289
+msgid "Subscriber"
+msgstr "Abonnent"
+
+#: includes/class_wp_experience_reports_helper.php:290
+msgid "Contributor"
+msgstr "Mitarbeiter"
+
+#: includes/class_wp_experience_reports_helper.php:291
+msgid "Author"
+msgstr "Autor"
+
+#: includes/class_wp_experience_reports_helper.php:292
+msgid "Editor"
+msgstr "Redakteur"
+
+#: includes/class_wp_experience_reports_helper.php:293
+msgid "Administrator"
+msgstr "Administrator"
+
+#: includes/license/admin/class_register_exec_license.php:191
+#: includes/license/admin/class_register_exec_license.php:217
+#, php-format
+msgid "The %s %s has been disabled. Contact the administrator."
+msgstr "Der %s %s wurde deaktiviert. Wenden Sie sich an den Administrator."
+
+#: includes/license/class_register_product_license.php:136
+#, php-format
+msgid "%s invalid license: To activate, enter your credentials."
+msgstr "%s ungültige Lizenz: Geben Sie zur Aktivierung Ihre Anmeldedaten ein."
+
+#: includes/license/class_register_product_license.php:144
+#, php-format
+msgid "The %s plugin has been successfully activated."
+msgstr "Das %s-Plugin wurde erfolgreich aktiviert."
+
+#: includes/license/partials/license-activate-product.php:29
+#, php-format
+msgid "%s \"%s\" could not be activated!"
+msgstr "%s \"%s\" konnte nicht aktiviert werden!"
+
+#: includes/license/partials/license-activate-product.php:53
+msgid "successfully activated"
+msgstr "erfolgreich aktiviert"
+
+#: includes/license/partials/license-activate-product.php:55
+msgid "Complete activation"
+msgstr "Vollständige Aktivierung"
+
+#: includes/license/partials/license-activate-product.php:60
+msgid "Enter access data"
+msgstr "Zugangsdaten eingeben"
+
+#: includes/license/partials/license-activate-product.php:69
+msgid "Client ID"
+msgstr ""
+
+#: includes/license/partials/license-activate-product.php:77
+msgid "Client secret"
+msgstr ""
+
+#: includes/license/partials/license-activate-product.php:86
+msgid "Save"
+msgstr "Speichern Sie"
+
+#: includes/license/partials/license-activate-product.php:93
+msgid "ERROR"
+msgstr "ERROR"
+
+#: includes/update-checker/yahnis-elsts/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:54
+msgid "View details"
+msgstr "Details anzeigen"
+
+#: includes/update-checker/yahnis-elsts/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:77
+#, php-format
+msgid "More information about %s"
+msgstr "Weitere Informationen über %s"
+
+#: includes/update-checker/yahnis-elsts/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:128
+msgid "Check for updates"
+msgstr "Nach Aktualisierungen suchen"
+
+#: includes/update-checker/yahnis-elsts/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:224
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr "Unbekannter Update-Checker-Status \"%s\""
+
+#: includes/update-checker/yahnis-elsts/plugin-update-checker/Puc/v4p11/Vcs/PluginUpdateChecker.php:98
+msgid "There is no changelog available."
+msgstr "Es ist kein Change Log verfügbar."
+
+#, fuzzy
+#~| msgid "Experience Reports Gallery Slider"
+#~ msgid "TExperience Reports Categories"
+#~ msgstr "Experience Reports Galerie Slider"

@@ -1,0 +1,47 @@
+<div class="report-post-info pb-3">
+    {% if d.attr.backToOverviewAktiv %}
+        <div class="report-post-back-url py-4">
+            <a class="{{ d.attr.backButtonCss }}" href="{{ d.cat_url }}">
+                {% autoescape false %}
+                    {{ d.attr.backButtonIcon }} {{ d.attr.backButtonLabel }}
+                {% endautoescape %}
+            </a>
+        </div>
+    {% endif %}
+    {% if d.showCategoryLinkAktiv %}
+        <div class="report-post-category">
+            <a class="fst-normal lh-1 pb-0 mb-0 d-block text-decoration-none" href="{{ d.cat_url }}">
+                <span class="fw-normal"><i class="bi bi-arrow-right-short"></i> {{ d.get_cat_name }}</span>
+            </a>
+        </div>
+    {% endif %}
+    {% if d.showPostDateAktiv %}
+        <time class="entry-date published small">
+            {{ d.posted_on_lang }}
+            <span class="report-post-author fw-normal">{{ d.date }}</span>
+        </time>
+    {% endif %}
+    {% if d.showPostAutorAktiv %}
+        <span class="report-post-autor-wrapper small">
+        {{ d.by_lang }}
+        <span class="report-post-author pt-2 fw-normal">{{ d.author }} </span>
+            </span>
+    {% endif %}
+
+    {% if d.showPostTitleActive %}
+        <h5 class="report-post-title lh-1 pt-3 mb-1">{{ d.title }}</h5>
+    {% endif %}
+    {% if d.showDateFromToAktiv %}
+        <div class="report-post-from-date fst-normal small pb-2">
+            {{ d.dateHeadline }}
+            <i class="fw-normal">
+                {{ d.date_from_format }}
+            </i>
+            {% if d.date_to_format %}
+                <span class="report-post-date-from">
+            {{ d.date_to_language }} <i class="fw-normal">{{ d.date_to_format }}</i>
+                </span>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,34 @@
+{% for d in data.data %}
+    <div class=" {{ d.bgClass }}">
+        <div class="container report-template1">
+            <div class="d-flex mx-auto flex-wrap template-one-wrapper border-bottom bg-light p-3">
+                {% for section in d.post.post_sections %}
+                    {% set counter = ( counter | default(0) ) + 1 %}
+                    {% if counter == 1 %}
+                        <div class="col-xl-9 col-6 p-3">
+                            <div class="content-one-headline">
+                                {% autoescape false %}
+                                    {{ section.headline }}
+                                {% endautoescape %}
+                            </div>
+                        </div>
+                    {% else %}
+                    {% endif %}
+                {% endfor %}
+                <div class="col-xl-3 col-6 p-3 text-xl-end text-start">
+                    <a {% if d.attr.buttonTargetAktiv %}
+                        target="_blank"
+                    {% endif %}
+                            class="{{ d.attr.buttonCss }}"
+                            href="{{ d.post.permalink }}">
+                        {% autoescape false %}
+                            {{ d.attr.buttonIcon }}
+                        {% endautoescape %}
+                        {{ d.attr.buttonLabel }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+

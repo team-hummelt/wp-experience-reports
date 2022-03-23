@@ -1,0 +1,80 @@
+<div class="row g-3">
+    {% for d in data %}
+        {% set counter = ( counter | default(0) ) + 1 %}
+        <div class="col-xl-6 col-12">
+            <div class="extension-detail-card card text-center shadow-sm border-top-0 mt-0">
+                <div class="card-header position-relative">
+                    <i class="wp-color bi bi-exclude"></i>&nbsp;
+                    <b class="strong-font-weight wp-color">{{ d.sys_lang.extension }}
+                        :</b> {{ d.lang.extension_name }} -
+                    <b class="strong-font-weight wp-color">{{ d.sys_lang.plugin_for }}:</b><br>
+                    <span class="d-inline-block strong-font-weight mt-1"
+                          style="font-size: .8rem">{{ d.data.extension_from }}</span>
+                    <div class="position-absolute" style="top:1rem">
+                        <span class="extCounter"> {{ counter }} </span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <img alt="" class="img-fluid"
+                         src="{{ d.data.extension_logo }}"
+                         style="max-width: 150px; max-height: 150px">
+                    <hr>
+                    <h5 class="card-title">{{ d.lang.extension_name }}</h5>
+                    <p class="card-text">{{ d.lang.extension_description }}</p>
+                    <hr>
+
+                    {% if d.activated %}
+                    <button data-bs-toggle="collapse" data-bs-target="#extensionLicense"
+                            data-id="{{ d.extension }}" data-template="license"
+                            data-license = "{{ d.license }}"
+                            class="btn-extension-execute btn btn-blue my-1">
+                        <i class="bi bi-postcard"></i>&nbsp; {{ d.sys_lang.licence }}
+                    </button>
+
+                    {% endif %}
+                    <button data-bs-toggle="collapse" data-bs-target="#extensionDetails"
+                            data-id="{{ d.extension }}" data-template="details"
+                            class="btn-extension-execute btn btn-blue-outline btn-sm my-1 {% if d.activated %} d-none  {% endif %}">
+                        <i class="bi bi-view-list"></i>&nbsp; {{ d.sys_lang.details }}
+                    </button>
+
+                    {% if not d.activated %}
+                        <button data-bs-toggle="collapse" data-bs-target="#extensionActivate"
+                                data-id="{{ d.extension }}" data-template="activate"
+                                class="btn-extension-execute btn btn-blue btn-sm my-1">
+                            <i class="bi bi-shield-check"></i>&nbsp; {{ d.sys_lang.activate }}
+                        </button>
+                    {% endif %}
+                    <button data-bs-toggle="collapse" data-bs-target="#extensionDownload"
+                            data-license = "{{ d.license }}"
+                            data-id="{{ d.extension }}" data-template="download" data-urlId="{{ d.url_id }}"
+                            class="btn-extension-execute btn btn-blue-outline {% if not d.activated %} btn-sm  {% endif %} my-1">
+                        <i class="bi bi-download"></i>&nbsp; {{ d.sys_lang.download }}
+                    </button>
+                </div>
+                <div class="card-footer text-muted">
+                    <b class="strong-font-weight">{{ d.sys_lang.status }}:
+                        <span class="fw-normal">
+                            {% if d.activated %}
+                            <span class="text-success">{{ d.sys_lang.activates }}</span>
+                             {% else %}
+                            <span class="text-danger">{{ d.sys_lang.deactivated }}</span>
+                            {% endif %}
+                      </span>
+                    </b>
+                    {% if d.err_msg %}
+                    <div class="small d-block" style="font-size: .7rem">
+                        <i class="text-danger fa fa-exclamation-triangle"></i>&nbsp;
+                        <b class="strong-font-weight"> API error:</b>  {{ d.err_msg }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+       </div>
+
+    {% endfor %}
+</div>
+
+
+
+

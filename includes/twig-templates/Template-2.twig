@@ -1,0 +1,62 @@
+{% for d in data.data %}
+    <div class=" {{ d.bgClass }}">
+        <div class="container report-template1">
+            <div class="d-flex mx-auto flex-wrap template-one-wrapper border-bottom bg-light p-3">
+                {% for section in d.post.post_sections %}
+                    {% set counter = ( counter | default(0) ) + 1 %}
+                    {% if counter < 4 %}
+                        {% if counter == 1 %}
+                            <div class="col-xl-4 col-6 p-3">
+                                <div class="content-one-headline">
+                                    {% autoescape false %}
+                                        {{ section.headline }}
+                                    {% endautoescape %}
+                                </div>
+                                <div class="content-one-content">
+                                    {% autoescape false %}
+                                        {{ section.content }}
+                                    {% endautoescape %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-xl-3 col-6 p-3">
+                                <div class="headline">
+                                    {% autoescape false %}
+                                        {{ section.headline }}
+                                    {% endautoescape %}
+                                </div>
+                                <div class="content">
+                                    {% if section.is_date %}
+                                        {% if d.post.date_from_format %}
+                                            {{ d.post.date_from_format }}
+                                            {% if d.post.date_to_format %}
+                                                {{ d.post.date_to_language }} {{ d.post.date_to_format }}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% else %}
+                                        {% autoescape false %}
+                                            {{ section.content }}
+                                        {% endautoescape %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <div class="col-xl-2 col-6 p-3 text-xl-end text-start">
+                    <a {% if d.attr.buttonTargetAktiv %}
+                        target="_blank"
+                    {% endif %}
+                            class="{{ d.attr.buttonCss }}"
+                            href="{{ d.post.permalink }}">
+                        {% autoescape false %}
+                            {{ d.attr.buttonIcon }}
+                        {% endautoescape %}
+                        {{ d.attr.buttonLabel }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+

@@ -1,0 +1,48 @@
+
+    {% for d in data.data %}
+        <div class="animate__animated animate__fadeIn py-3 report-post {{ d.attr.className }} {{ d.bgClass }}">
+            <div class="container">
+                <div class="row g-3 align-items-stretch {% if d.reverse %}flex-xl-row-reverse{% endif %}">
+                    <div class="col-xl-6 col-12 h-100">
+                        {{ include('splide/splide-layout-template-1.twig') }}
+                    </div>
+                    <div class="col-xl-6 col-12 h-100">
+                        <h2>{{ d.post.post_title }}</h2>
+                        {% for section in d.post.post_sections %}
+                            <h5 class="section-header mb-0 lh-1">
+                                {{ section.headline }}
+                            </h5>
+                            <div class="section-content pb-3">
+                                {% if section.is_date %}
+                                    {% if d.post.date_from_format %}
+                                        {{ d.post.date_from_format }}
+                                        {% if d.post.date_to_format %}
+                                            {{ d.post.date_to_language }} {{ d.post.date_to_format }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% else %}
+                                    {{ section.content }}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="report-excerpt pe-3 pt-3">
+                            {{ d.post.excerpt }}
+                        </div>
+                        <div class="report-button pt-3">
+                            <a {% if d.attr.buttonTargetAktiv %}
+                                target="_blank"
+                            {% endif %}
+                               class="{{ d.attr.buttonCss }}"
+                               href="{{ d.post.permalink }}">
+                                {% autoescape false %}
+                                    {{ d.attr.buttonIcon }}
+                                {% endautoescape %}
+                                {{ d.attr.buttonLabel }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+

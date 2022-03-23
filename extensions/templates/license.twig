@@ -1,0 +1,185 @@
+<div class="container form-wrapper">
+    <div class="extensionToggleClass card  mb-2 shadow-sm" style="min-height: 65vh">
+        <h5 class="align-middle card-header form-background-head">
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="#1673aa" class="bi bi-subtract"
+                 viewBox="0 0 21 21">
+                <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
+            </svg>
+            {{ data.l.license_details }}
+        </h5>
+        <!--selectLimit-->
+        <div class="card-body ">
+            <div class="d-block">
+                <button data-bs-toggle="collapse" data-bs-target="#extensionTemplates"
+                        class="btn-extension-back btn btn-blue-outline btn-sm">
+                    <i class="bi bi-reply-all-fill"></i>&nbsp; {{ data.l.back_btn }}
+                </button>
+            </div>
+            <hr>
+            <div class="card-body">
+                <figure>
+                    <blockquote class="blockquote">
+                        <h5 class="strong-font-weight text-muted">{{ data.l.Licence_for }} {{ data.vorname }} {{ data.nachname }}
+                            <small class="small">
+                                <span class="wp-color strong-font-weight"> ( {{ data.username }} )</span>
+                            </small>
+                        </h5>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        <cite title="E-Mail: {{ data.email }}"><a class="custom-link"
+                                                                  href="mailto:{{ data.email }}">{{ data.email }}</a></cite>
+                    </figcaption>
+                </figure>
+                <hr>
+                <span class="d-block lh-1 strong-font-weight"><b
+                            class="strong-font-weight">{{ data.l.Licence }}:</b>  {{ data.license_bezeichnung }}</span>
+                <span class="small lh-1 d-inline-block"><b
+                            class="strong-font-weight">{{ data.l.type }}:</b> {{ data.license_type }} </span>
+                <hr>
+                <dl class="row">
+                    <dt class="col-sm-2 col-3 text-truncate">{{ data.l.activation_code }}:</dt>
+                    <dd class="col-sm-10 col-9">
+                        <span class="wp-color strong-font-weight text-nowrap"> {{ data.license }}</span> &nbsp;
+                        <i data-id="{{ data.license }}" onclick="copy_data_client(this)" title="{{ data.l.copy }}"
+                           class="copy_release_keys wp-color cursor-pointer bi bi-files"></i>
+                        <sup id="info{{ data.license }}"
+                             class="d-inline-block showInfo wp-color">&nbsp; {{ data.l.copies }}....</sup>
+                    </dd>
+                    <dt class="col-sm-2">{{ data.l.time_limit }}:</dt>
+                    <dd class="col-sm-10">
+                        <span class="wp-color strong-font-weight">{% if data.time_limit > 0 %}{{ data.time_limit }} {% endif %} {{ data.limitMonat }}</span>
+                    </dd>
+                    <dt class="col-sm-2">{{ data.l.url_limit }}:</dt>
+                    <dd class="col-sm-10">
+                        <span class="wp-color strong-font-weight">{{ data.url_limit }} {{ data.urlLimitTxt }}</span>
+                    </dd>
+                    <dt class="col-sm-2">{{ data.l.licence_start }}:</dt>
+                    <dd class="col-sm-10">
+                        <span class="wp-color  {% if not  data.activated %} text-danger {% endif %}  strong-font-weight">{{ data.activatedTime }}</span>
+                    </dd>
+                    <dt class="col-sm-2">{{ data.l.licence_end }}:</dt>
+                    <dd class="col-sm-10">
+                        <span class="wp-color strong-font-weight">{{ data.licenseEndTime }}</span>
+                    </dd>
+                </dl>
+                <hr>
+                <h5 class="bg-light align-middle border p-3 mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#1673aa" class="bi bi-exclude"
+                         viewBox="0 0 20 20">
+                        <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm12 2H5a1 1 0 0 0-1 1v7h7a1 1 0 0 0 1-1V4z"/>
+                    </svg>&nbsp; {{ data.l.extension }}:
+                    <small class="small text-muted">({{ data.license_type }})</small></h5>
+                <div class="table-responsive-xxl mb-4">
+                    <table class="table align-middle mb-0 pb-0 table-striped nowrap w-100 table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="text-center" scope="col"></th>
+                            <th scope="col">{{ data.l.extension }}</th>
+                            <th class="text-center" scope="col">{{ data.l.version }}</th>
+                            <th scope="col">{{ data.l.extension_for }}</th>
+                            <th class="text-center" scope="col">{{ data.l.file_size }}</th>
+                            <th class="text-center" scope="col">{{ data.l.type }}</th>
+                            <th class="text-center" scope="col">{{ data.l.php_min }}</th>
+                            <th class="text-center" scope="col">{{ data.l.wp_min }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="align-middle text-center">
+                                <img src="{{ data.extension_logo }}"
+                                     alt="{{ data.extension_name }}"
+                                     title="{{ data.extension_name }}" width="60" height="60">
+                            </td>
+                            <td><b class="strong-font-weight wp-color"> {{ data.extension_name }}</b></td>
+                            <td class="text-center">{{ data.extension_version }}</td>
+                            <td><b class="strong-font-weight">
+                                    {% for slug in data.product_slug %}
+                                        <span class="strong-font-weight d-block text-nowrap"
+                                              style="font-size: .8rem">{{ slug }}</span>
+                                    {% endfor %}
+                                </b>
+                            </td>
+                            <td class="text-center">({{ data.file_size }})</td>
+                            <td class="text-center">{{ data.mime_type }}</td>
+                            <td class="text-center">Ver: {{ data.extension_php_min }}</td>
+                            <td class="text-center">Ver: {{ data.extension_wp_min }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h5 class="bg-light align-middle border  p-3 mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#1673aa"
+                         class="bi bi-shield-check" viewBox="0 0 18 18">
+                        <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                        <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                    </svg>&nbsp;
+                    {{ data.l.installations }}</h5>
+                <div class="table-responsive-xxl">
+                    <table class="urlTable table align-middle mb-0 pb-0 table-striped nowrap w-100 table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="text-center" scope="col">#</th>
+                            <th scope="col">{{ data.l.url_licence }}</th>
+                            <th class="text-center" scope="col">URL</th>
+                            <th class="text-center" scope="col">{{ data.l.activates }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ids in data.license_data.url_ids %}
+                            {% set counter = ( counter | default(0) ) + 1 %}
+                            <tr>
+                                <td class="align-middle text-center strong-font-weight">{{ counter }}</td>
+                                <td>
+                                    {% if not ids.url %}
+                                     <span class="wp-color strong-font-weight text-nowrap">
+                                     {{ ids.url_id }}</span> &nbsp;
+
+                                    <i data-id="{{ ids.url_id }}" onclick="copy_data_client(this, {{ counter }})"
+                                       title="{{ data.l.copy }}"
+                                       class="copy_release_keys wp-color cursor-pointer bi bi-files"></i>
+                                    <sup id="info{{ counter }}"
+                                         class="d-inline-block showInfo wp-color">&nbsp; {{ data.l.copies }}...</sup>
+                                  {% else %}
+                                      <span class="strong-font-weight text-nowrap" style="color: #bbbbbb">
+                                     {{ ids.url_id }}</span> &nbsp;
+                                    {% endif %}
+                                </td>
+                                {% if not ids.url %}
+                                    <td class="text-center">
+                                        <span class="text-nowrap strong-font-weight">{{ data.l.not_activated }}</span>
+                                    </td>
+                                {% else %}
+                                    <td class="strong-font-weight" style="color: #198754"><span class="text-nowrap"></span>{{ ids.url }}</td>
+                                {% endif %}
+                                <td class="text-center align-middle">
+                                    {% if ids.url %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#198754"
+                                             class="bi bi-check2-circle" viewBox="0 0 16 16">
+                                            <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                                            <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#dc3545"
+                                             class="bi bi-x-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if data.url_limit_aktiv %}
+                <hr>
+                <h5 class="strong-font-weight"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#1673aa" class="bi bi-exclude"
+                                                    viewBox="0 0 20 20">
+                        <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm12 2H5a1 1 0 0 0-1 1v7h7a1 1 0 0 0 1-1V4z"/>
+                    </svg> URL und Lizenzdaten ändern</h5>
+                Um eine URL freizugeben oder zu ändern, loggen Sie sich mit Ihren Zugangsdaten <a class="text-decoration-none fw-bold" target="_blank" href="{{ data.kunden_login_url }}">hier</a>  ein.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
