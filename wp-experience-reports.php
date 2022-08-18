@@ -16,7 +16,10 @@
  * Plugin Name:       Experience Reports
  * Plugin URI:        https://wwdh.de
  * Description:       Write Experience Reports and insert the reports in pages or posts. With the Experience Reports Gutenberg plugin you have countless setting options and can place the reports anywhere you want.
- * Version:           1.0.0
+ * Version:           1.0.1
+ * Requires PHP: 7.4
+ * Requires at least: 5.6
+ * Tested up to:      6.0.1
  * Author:            Jens Wiecker
  * Author URI:        https://wwdh.de
  * License:           GPL3

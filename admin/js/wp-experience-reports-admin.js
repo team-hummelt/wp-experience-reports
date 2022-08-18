@@ -87,6 +87,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
         xhr.send(formData);
     }
 
+    function api_xhr_rest_endpoint_admin_data(data, uri, callback) {
+        let xhr = new XMLHttpRequest();
+        let formData = new FormData();
+        for (let [name, value] of Object.entries(data)) {
+            formData.append(name, value);
+        }
+        xhr.open('POST', ERRestObj.api_url + uri, true);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                if (typeof callback === 'function') {
+                    xhr.addEventListener("load", callback);
+                    return false;
+                }
+            }
+        }
+        xhr.setRequestHeader('X-WP-Nonce', ERRestObj.nonce);
+        xhr.send(formData);
+    }
+
     let pluginAdminSendFormTimeout;
     let pluginAdminSendFormular = document.querySelectorAll(".send-ajax-experience-admin-settings:not([type='button'])");
     if (pluginAdminSendFormular) {
@@ -113,12 +132,77 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     function formular_save_callback() {
         let data = JSON.parse(this.responseText);
-        if(data.status) {
+        if (data.status) {
 
         }
 
         show_ajax_spinner(data);
     }
+
+    let syncTwigTemplates = document.querySelector('.btn-sync-templates');
+    if (syncTwigTemplates) {
+        syncTwigTemplates.addEventListener("click", function () {
+            let formData = {
+                'method': 'sync-template-folder'
+            }
+            api_xhr_rest_endpoint_admin_data(formData, 'wp-report-posts', sync_templates_callback)
+        });
+    }
+
+    function sync_templates_callback() {
+        let data = JSON.parse(this.responseText);
+
+    }
+
+    let saveTemplateSettings = document.getElementById('saveTemplateSettings');
+    if (saveTemplateSettings) {
+        saveTemplateSettings.addEventListener("submit", function (e) {
+            api_xhr_experience_reports_form_data(saveTemplateSettings, true, formular_update_templates_callback);
+            e.preventDefault();
+        });
+    }
+
+    function formular_update_templates_callback() {
+        let data = JSON.parse(this.responseText);
+        if(data.status){
+            success_message(data.msg);
+        } else {
+            warning_message(data.msg);
+        }
+    }
+
+    let pluginActionsBtn = document.querySelectorAll('.pluginActionsBtn');
+    if(pluginActionsBtn.length){
+        let node = Array.prototype.slice.call(pluginActionsBtn, 0);
+        node.forEach(function (node) {
+            node.addEventListener("click", function (e) {
+                this.blur();
+                let type = node.getAttribute('data-type');
+                switch (type){
+                    case'delete_twig_template':
+                        let id = node.getAttribute('data-id');
+                        let formData = {
+                            'method':type,
+                            'id':id
+                        }
+                        api_xhr_experience_reports_form_data(formData,false,delete_template_callback)
+                        break;
+                }
+            });
+        })
+    }
+
+    function delete_template_callback() {
+        let data = JSON.parse(this.responseText);
+        if(data.status){
+            let delContainer = document.getElementById(data.id);
+            delContainer.remove();
+            success_message(data.msg);
+        } else {
+            warning_message(data.msg);
+        }
+    }
+
 
     /*======================================
     ========== AJAX SPINNER SHOW  ==========

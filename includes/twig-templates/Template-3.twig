@@ -1,12 +1,12 @@
 {% for d in data.data %}
     <div class=" {{ d.bgClass }}">
-        <div class="container report-template1">
-            <div class="d-flex mx-auto flex-wrap template-one-wrapper border-bottom bg-light p-3">
+        <div class="report-container report-template3 animate__animated animate__fadeIn">
+            <div class="d-flex mx-auto flex-wrap template-wrapper border-bottom bg-light p-3">
                 {% for section in d.post.post_sections %}
                     {% set counter = ( counter | default(0) ) + 1 %}
                     {% if counter == 1 %}
                         <div class="col-xl-9 col-6 p-3">
-                            <div class="content-one-headline">
+                            <div class="content-one-headline fst-normal">
                                 {% autoescape false %}
                                     {{ section.headline }}
                                 {% endautoescape %}

@@ -22,12 +22,11 @@ class Experience_Reports_Block_Callback {
      * @return false|string|void
      */
     public static function callback_experience_report_block($attributes) {
-
         if ($attributes) {
             ob_start();
             echo '<div class="experience-reports">';
-            add_filter('render_block', array(Render_Experience_Reports_Callback_Templates::class, 'render_core_experience_reports_callback'), 0, 2);
-            apply_filters(WP_EXPERIENCE_REPORTS_BASENAME.'/render_callback_template', $attributes);
+          // add_filter('render_block', array(Render_Experience_Reports_Callback_Templates::class, 'render_core_experience_reports_callback'), 0, 2);
+           echo apply_filters(WP_EXPERIENCE_REPORTS_BASENAME.'/render_callback_template', $attributes);
             echo '</div>';
             return ob_get_clean();
         }
@@ -36,7 +35,7 @@ class Experience_Reports_Block_Callback {
     public static function callback_experience_report_filter($attributes){
         ob_start();
         echo '<div class="experience-reports">';
-        //add_filter('render_block', array(Render_Experience_Reports_Callback_Templates::class, 'render_core_experience_reports_callback'), 0, 2);
+       // add_filter('render_block', array(Render_Experience_Reports_Callback_Templates::class, 'render_core_experience_reports_callback'), 0, 2);
          apply_filters(WP_EXPERIENCE_REPORTS_BASENAME.'/render_callback_select_filter', $attributes);
          echo '</div>';
         return ob_get_clean();
@@ -55,6 +54,16 @@ class Experience_Reports_Block_Callback {
                 apply_filters(REPORTS_GALLERY_BASENAME.'/load_galerie_templates', $attributes);
                 echo '</div>';
             }
+            return ob_get_clean();
+        }
+    }
+
+    public static function callback_experience_report_template($attributes){
+        if ($attributes) {
+            ob_start();
+            echo '<div class="experience-reports-templates">';
+            apply_filters(WP_EXPERIENCE_REPORTS_BASENAME.'/render_callback_templates', $attributes);
+            echo '</div>';
             return ob_get_clean();
         }
     }

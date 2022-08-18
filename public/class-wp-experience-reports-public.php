@@ -93,6 +93,8 @@ class Wp_Experience_Reports_Public {
         wp_localize_script('experience-reports-public-ajax-script', 'report_public_obj', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => $title_nonce,
+            'rest_url'=> esc_url_raw(rest_url('experience-report-public/v2/')),
+            'rest_nonce' => wp_create_nonce( 'wp_rest' )
         ));
 
 
