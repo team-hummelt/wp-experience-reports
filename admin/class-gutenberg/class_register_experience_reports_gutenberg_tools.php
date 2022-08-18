@@ -348,6 +348,20 @@ class Register_Experience_Reports_Gutenberg_Tools
 
         register_meta(
             'post',
+            '_experience_reports_date_separator',
+            array(
+                'type' => 'string',
+                'object_subtype' => 'experience_reports',
+                'single' => true,
+                'show_in_rest' => true,
+                'default' => 'bis',
+                'sanitize_callback' => 'sanitize_text_field',
+                'auth_callback' => array($this, 'sidebar_permissions_check')
+            )
+        );
+
+        register_meta(
+            'post',
             '_experience_reports_image_option',
             array(
                 'type' => 'string',
@@ -386,7 +400,8 @@ class Register_Experience_Reports_Gutenberg_Tools
             'ERRestObj',
             array(
                 'url' => esc_url_raw(rest_url('wp-experience-report/v1/')),
-                'nonce' => wp_create_nonce('wp_rest')
+                'nonce' => wp_create_nonce('wp_rest'),
+                'api_url' => esc_url_raw(rest_url('wp-report-posts/v1/')),
             )
         );
     }
@@ -447,6 +462,41 @@ class Register_Experience_Reports_Gutenberg_Tools
             'editor_script' => 'experience-reports-gutenberg-category',
         ));
 
+    }
+
+    /**
+     * REGISTER TEAM MEMBERS GUTENBERG SCRIPTS
+     *
+     * @since    1.0.0
+     */
+    public function experience_report_block_template_scripts(): void
+    {
+
+        $plugin_asset = require WP_EXPERIENCE_REPORTS_GUTENBERG_DIR . 'npm-template-block/build/index.asset.php';
+
+        wp_enqueue_script(
+            'experience-reports-gutenberg-template',
+            plugins_url($this->basename) . '/admin/gutenberg/npm-template-block/build/index.js',
+            $plugin_asset['dependencies'], $plugin_asset['version'], true
+        );
+
+        wp_enqueue_style(
+            'experience-reports-gutenberg-template',
+            plugins_url($this->basename) . '/admin/gutenberg/npm-template-block/build/index.css', array(), $this->version
+        );
+    }
+
+    /**
+     * Register TAM MEMBERS REGISTER GUTENBERG BLOCK TYPE
+     *
+     * @since    1.0.0
+     */
+    public function register_experience_report_template_block_type()
+    {
+        register_block_type('wwdh/experience-reports-template', array(
+            'render_callback' => [Experience_Reports_Block_Callback::class, 'callback_experience_report_template'],
+            'editor_script' => 'experience-reports-gutenberg-template',
+        ));
     }
 
     /**

@@ -9,19 +9,60 @@ body .experience-reports {
 }
 
 
+.pre-templates {
+  background-color: #f7f7f7;
+  padding: 1rem;
+}
+
+pre {
+  counter-reset: line;
+  width: 100%;
+  display: inline-block;
+  .number {
+    min-width: 500px;
+    width: 100%;
+    display: block;
+    counter-increment: line;
+    padding: .25rem 0 .25rem .4rem;
+    vertical-align: middle !important;
+
+    &:before {
+      content: counter(line);
+      padding-right: 1rem;
+    }
+  }
+
+  .number:nth-child(odd) {
+    &:before {
+      color: #2a2a2a;
+    }
+    background-color: #ebebeb;
+  }
+  .number:nth-child(even) {
+    background-color: #dfdfdf;
+
+    &:before {
+      color: #5e5e5e;
+    }
+
+  }
+}
+
+
 .no-blur:focus, .no-blur:active, .no-blur:focus {
   outline: none !important;
-  box-shadow: none!important;
-  overflow: hidden!important;
+  box-shadow: none !important;
+  overflow: hidden !important;
 }
 
 .btn-danger {
   color: #fff;
-  background-color: $alertRed!important;
-  border-color:  $alertRed!important;
+  background-color: $alertRed !important;
+  border-color: $alertRed !important;
+
   &:hover {
     background-color: #ba3010 !important;
-    border-color:  #ba3010!important;
+    border-color: #ba3010 !important;
   }
 }
 
@@ -74,6 +115,7 @@ body .experience-reports {
 .wp-color {
   color: $wp-blue;
 }
+
 .tooltip {
   position: absolute;
   z-index: 999999;
@@ -262,9 +304,10 @@ body .experience-reports {
 }
 
 .btn-extension {
-  color: #36563a!important;
-  background-color: greenyellow!important;
-  border-color: #acb59f!important;
+  color: #36563a !important;
+  background-color: greenyellow !important;
+  border-color: #acb59f !important;
+
   &:hover {
     background-color: #a3f12c !important;
     color: #2b3f2f !important;
@@ -320,6 +363,7 @@ table.dataTable.table-striped > tbody > tr.odd {
   cursor: not-allowed;
   font-weight: 500;
 }
+
 .bi-border {
   padding: .2em .25em .15em;
   border: solid .08em #eee;
@@ -327,9 +371,8 @@ table.dataTable.table-striped > tbody > tr.odd {
 }
 
 .text-danger {
-  color: $alertRed!important;
+  color: $alertRed !important;
 }
-
 
 
 .card {
@@ -346,12 +389,14 @@ table.dataTable.table-striped > tbody > tr.odd {
 
 //WRAPPER
 .experience-reports {
-  .urlTable td, .urlTable th{
-    padding: 1rem 0.5rem!important;
+  .urlTable td, .urlTable th {
+    padding: 1rem 0.5rem !important;
   }
+
   .showInfo {
     opacity: 0;
   }
+
   .extension-detail-card .extCounter {
     display: flex;
     align-items: center;
@@ -368,7 +413,7 @@ table.dataTable.table-striped > tbody > tr.odd {
     border-radius: 50%;
   }
 
- .spinner-sm-border {
+  .spinner-sm-border {
     display: inline-block;
     width: 1rem;
     height: 1rem;
@@ -383,12 +428,15 @@ table.dataTable.table-striped > tbody > tr.odd {
   .bi-2x {
     font-size: 2em
   }
+
   .bi-3x {
     font-size: 3em
   }
+
   .bi-4x {
     font-size: 4em
   }
+
   .bi-5x {
     font-size: 5em
   }
@@ -406,7 +454,7 @@ table.dataTable.table-striped > tbody > tr.odd {
   @keyframes bi-spinner {
     0% {
       -webkit-transform: rotate(0deg) !important;
-      transform: rotate(0deg)!important;
+      transform: rotate(0deg) !important;
     }
     100% {
       -webkit-transform: rotate(359deg) !important;
@@ -416,6 +464,7 @@ table.dataTable.table-striped > tbody > tr.odd {
 
 
   padding: 2rem 0;
+
   input[type=radio]:checked::before {
     content: "";
     border-radius: unset;
@@ -425,18 +474,20 @@ table.dataTable.table-striped > tbody > tr.odd {
     background-color: transparent !important;
     line-height: unset;
   }
+
   .text-alert {
     color: $alertRed;
   }
 
   .text-success {
-    color: $success!important;
+    color: $success !important;
   }
 
   .bg-alert {
     background-color: $alertRed;
-    color: $bg-gray!important;
+    color: $bg-gray !important;
   }
+
   .btn-blue:disabled {
     background-color: transparent;
     color: #969696;
@@ -446,7 +497,7 @@ table.dataTable.table-striped > tbody > tr.odd {
   .btn-modal-close {
 
     &:hover {
-      border-color: $alertRed!important;
+      border-color: $alertRed !important;
     }
   }
 
@@ -673,9 +724,10 @@ table.dataTable.table-striped > tbody > tr.odd {
 
   .btn-hupa.btn-secondary {
     i {
-     color: $yellow;
+      color: $yellow;
     }
   }
+
   .btn-hupa.btn-outline-secondary.active,
   .btn-hupa.btn-outline-secondary.dropdown-toggle.show,
   .btn-hupa.btn-outline-secondary:active,
@@ -688,14 +740,13 @@ table.dataTable.table-striped > tbody > tr.odd {
   }
 
 
-
   .btn-hupa {
     i {
       color: $yellow;
     }
 
     &:hover i {
-      color:$yellowActive;
+      color: $yellowActive;
     }
   }
 
@@ -755,10 +806,11 @@ table.dataTable.table-striped > tbody > tr.odd {
     z-index: 99999 !important;
   }
 
-  .btn:focus, .btn:active, .active.btn:active, .active.btn:focus,.page-link:focus {
+  .btn:focus, .btn:active, .active.btn:active, .active.btn:focus, .page-link:focus {
     outline: none !important;
     box-shadow: none;
   }
+
   .page-link:focus {
     background-color: #fff;
   }
@@ -1354,5 +1406,6 @@ table.dataTable.table-striped > tbody > tr.odd {
     opacity: 0
   }
 }
+
 //end WRAPPER
 

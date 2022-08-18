@@ -92,17 +92,40 @@ class Render_Experience_Reports_Callback_Templates
      */
     public static function render_core_experience_reports_callback(string $block_content, array $block): string
     {
+        //  print_r($block);
         if ($block['blockName'] === 'wwdh/experience-reports-block' && !is_admin() && !wp_is_json_request()) {
+
+            return str_replace('wp-block-columns', '', $block_content);
+        }
+        return $block_content;
+    }
+
+    /**
+     * @param string $block_content
+     * @param array $block
+     * @return string
+     */
+    public static function render_core_experience_reports_templates_callback(string $block_content, array $block): string
+    {
+        //  print_r($block);
+        if ($block['blockName'] === 'wwdh/experience-reports-template' && !is_admin() && !wp_is_json_request()) {
             return str_replace('wp-block-columns', '', $block_content);
         }
         return $block_content;
     }
 
 
-    public function render_callback_select_filter($attributes) {
+    public function render_callback_select_filter($attributes)
+    {
+
         isset($attributes['selectedFirstCategoryName']) && $attributes['selectedFirstCategoryName'] ? $selectedFirstCategoryName = (string)$attributes['selectedFirstCategoryName'] : $selectedFirstCategoryName = 'Alle';
         isset($attributes['selectCategoryLabel']) && $attributes['selectCategoryLabel'] ? $selectCategoryLabel = (string)$attributes['selectCategoryLabel'] : $selectCategoryLabel = 'Kategorie Auswahl';
         isset($attributes['className']) && $attributes['className'] ? $className = (string)$attributes['className'] : $className = '';
+
+        isset($attributes['showCategoryAktiv']) ? $showCategoryAktiv = (bool)$attributes['showCategoryAktiv'] : $showCategoryAktiv = false;
+        isset($attributes['selectCategoryLabelCss']) && $attributes['selectCategoryLabelCss'] ? $selectCategoryLabelCss = (string)$attributes['selectCategoryLabelCss'] : $selectCategoryLabelCss = '';
+        isset($attributes['disabledCategories']) && $attributes['disabledCategories'] ? $disabledCategories = $attributes['disabledCategories'] : $disabledCategories = '';
+
         $rand = apply_filters($this->basename . '/generate_random_id', 12, 0);
         global $post;
         $posts = get_post($post->ID);
@@ -117,18 +140,43 @@ class Render_Experience_Reports_Callback_Templates
             }
         }
 
+
+        if (!$attrArr) {
+            if ($postAttribute) {
+                foreach ($postAttribute as $attribute) {
+                    if ($attribute['innerBlocks']) {
+                        foreach ($attribute['innerBlocks'] as $inner) {
+                            if ($inner['blockName'] == 'wwdh/experience-reports-block') {
+                                $attrArr[] = $inner['attrs'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
         $selId = [];
-        if($attrArr){
-            foreach ($attrArr as $tmp){
+        if ($attrArr) {
+            foreach ($attrArr as $tmp) {
                 $selId[] = $tmp['selectedCategory'];
             }
         }
 
+        $notCat = [];
+        if ($disabledCategories && is_array($disabledCategories)) {
+            foreach ($disabledCategories as $delCat) {
+                $json = json_decode($delCat);
+                if (isset($json->id)) {
+                    $notCat[] = $json->id;
+                }
+            }
+        }
         $selId = array_merge_recursive(array_unique($selId));
         $selectData = [];
-        if($selId){
-            foreach ($selId as $tmp){
-
+        if ($selId) {
+            foreach ($selId as $tmp) {
+                if (in_array($tmp, $notCat)) {
+                    continue;
+                }
                 $selectItem = [
                     'id' => $tmp,
                     'name' => $this->get_report_category_name_by_id($tmp)
@@ -142,7 +190,7 @@ class Render_Experience_Reports_Callback_Templates
             'selectedFirstCategoryName' => $selectedFirstCategoryName,
             'selectCategoryLabel' => $selectCategoryLabel,
             'className' => $className,
-            'rand'=> $rand,
+            'rand' => $rand,
             'selected' => $selectData
         ];
 
@@ -151,8 +199,71 @@ class Render_Experience_Reports_Callback_Templates
         } catch (LoaderError|SyntaxError|RuntimeError|Throwable $e) {
             echo '';
         }
+
         echo $template;
-      // print_r($attributes);
+
+    }
+
+    public function render_callback_templates($attributes)
+    {
+        $attr = new stdClass();
+        isset($attributes['selectedTemplate']) && $attributes['selectedTemplate'] ? $attr->selectedTemplate = (int)$attributes['selectedTemplate'] : $attr->selectedTemplate = '';
+        isset($attributes['sitePostId']) && $attributes['sitePostId'] ? $attr->sitePostId = (int)$attributes['sitePostId'] : $attr->sitePostId = '';
+        isset($attributes['className']) && $attributes['className'] ? $attr->className = (string)$attributes['className'] : $attr->className = '';
+        isset($attributes['selectedCategory']) && $attributes['selectedCategory'] ? $attr->selectedCategory = (int)$attributes['selectedCategory'] : $attr->selectedCategory = '';
+        isset($attributes['templateExtraExecute']) && $attributes['templateExtraExecute'] ? $attr->templateExtraExecute = $attributes['templateExtraExecute'] : $attr->templateExtraExecute = '';
+
+
+        $currentPostId = filter_input(INPUT_GET, 'report-post', FILTER_SANITIZE_NUMBER_INT);
+        $randId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
+      //  print_r($attributes);
+        if (!$attr->selectedTemplate || !$attr->sitePostId) {
+            return '';
+        }
+
+        $meta = [];
+        global $post;
+        $post = get_post($attr->sitePostId);
+
+
+        $t = apply_filters($this->basename.'/get_post_attributes',$attr->sitePostId,$attr->selectedCategory);
+
+        if($post->post_type == 'experience_reports'){
+            $meta = $this->get_experience_reports_meta_data($attr->sitePostId);
+        }
+
+        if(!isset($post)){
+            return '';
+        }
+
+        if($meta->date_from){
+            $meta->date_from_format_alternate = apply_filters($this->basename . '/date_format', $meta->date_from, 8)->date;
+        }
+
+        if($meta->date_to){
+            $meta->date_to_format_alternate = apply_filters($this->basename . '/date_format', $meta->date_to, 8)->date;
+        }
+
+        $catId = '';
+        $category = get_the_terms($currentPostId, 'experience_reports_category');
+        //get_post_attributes
+      $twigTemplate = (object)[
+            'post'=> $post,
+            'meta'=> $meta,
+            'attr'=>$attr
+        ];
+        //print_r($meta);
+        $getTemplate = apply_filters($this->basename . '/get_twig_templates', $attr->selectedTemplate);
+        $twigData = apply_filters($this->basename . '/object_to_array', (array)$twigTemplate);
+        $template = '';
+        try {
+            $template = $this->twig->render($getTemplate['file'], ['d' => $twigData]);
+        } catch (LoaderError|SyntaxError|RuntimeError|Throwable $e) {
+            echo '';
+        }
+
+        echo preg_replace(array('/<!--(.*)-->/Uis', "/[[:blank:]]+/"), array('', ' '), str_replace(array("\n", "\r", "\t"), '', $template));
+
     }
 
     /**
@@ -160,15 +271,24 @@ class Render_Experience_Reports_Callback_Templates
      */
     public function render_callback_template($attributes)
     {
-
         global $post;
         isset($attributes['postId']) && $attributes['postId'] ? $postId = (int)$attributes['postId'] : $postId = $post->ID;
         isset($attributes['dataLoad']) && $attributes['dataLoad'] ? $dataLoad = (int)$attributes['dataLoad'] : $dataLoad = 1;
         isset($attributes['loadMore']) && $attributes['loadMore'] ? $loadMore = true : $loadMore = false;
         isset($attributes['selectedCategory']) && $attributes['selectedCategory'] ? $selectedCategory = (int)$attributes['selectedCategory'] : $selectedCategory = '';
-      //  isset($attributes['catBlockAktiv']) && $attributes['catBlockAktiv'] ? $catBlockAktiv = true : $catBlockAktiv = false;
+        //  isset($attributes['catBlockAktiv']) && $attributes['catBlockAktiv'] ? $catBlockAktiv = true : $catBlockAktiv = false;
 
         $attr = apply_filters($this->basename . '/get_post_attributes', $postId, $selectedCategory);
+
+        $notCat = [];
+        if (isset($attr->disabledCategories) && !empty($attr->disabledCategories) && is_array($attr->disabledCategories)) {
+            foreach ($attr->disabledCategories as $delCat) {
+                $json = json_decode($delCat);
+                if (isset($json->id)) {
+                    $notCat[] = $json->id;
+                }
+            }
+        }
 
         $this->attr = $attr;
         $pagination = '';
@@ -177,6 +297,11 @@ class Render_Experience_Reports_Callback_Templates
         if (!$attr->selectedCategory || !$attr->selectedTemplate) {
             return '';
         }
+
+        if (in_array($attr->selectedCategory, $notCat)) {
+            return '';
+        }
+
         $args = [
             'post_type' => 'experience_reports',
             'posts_per_page' => -1,
@@ -191,12 +316,15 @@ class Render_Experience_Reports_Callback_Templates
         ];
 
 
-        $selectedTemplate = apply_filters($this->basename.'/get_template_select', $attr->selectedTemplate);
-        if(!$selectedTemplate['is_gallery']){
+        //$selectedTemplate = apply_filters($this->basename.'/get_template_select', $attr->selectedTemplate);
+        $selectedTemplate = apply_filters($this->basename . '/get_twig_templates', $attr->selectedTemplate);
+        if (!$selectedTemplate['is_gallery']) {
             $attr->galleryShowActive = false;
         }
 
+
         $totalPosts = new WP_Query($args);
+
         wp_reset_query();
         $total = count($totalPosts->posts);
         $notPagination = true;
@@ -252,7 +380,7 @@ class Render_Experience_Reports_Callback_Templates
         foreach ($reportPosts as $tmp) {
 
             if ($loadMore) {
-                if ($x >= $moreStart && $x <= $moreEnd + 1 ) {
+                if ($x >= $moreStart && $x <= $moreEnd + 1) {
                 } else {
                     $x++;
                     continue;
@@ -268,13 +396,26 @@ class Render_Experience_Reports_Callback_Templates
 
             $slider_template->rand = apply_filters($this->basename . '/generate_random_id', 12, 0);
             $slider_template->attr = $attr;
-            if ($i % 2 == 0) {
-                $slider_template->reverse = true;
-                $slider_template->bgClass = 'background-even';
+            if ($loadMore) {
+                // echo $x;
+                if ($x % 2 == 0) {
+                    $slider_template->reverse = true;
+                    $slider_template->bgClass = 'background-even';
+                } else {
+                    $slider_template->reverse = false;
+                    $slider_template->bgClass = 'background-odd';
+                }
+
             } else {
-                $slider_template->reverse = false;
-                $slider_template->bgClass = 'background-odd';
+                if ($i % 2 == 0) {
+                    $slider_template->reverse = true;
+                    $slider_template->bgClass = 'background-even';
+                } else {
+                    $slider_template->reverse = false;
+                    $slider_template->bgClass = 'background-odd';
+                }
             }
+
 
             if ($tmp->cover_image->id != 0) {
                 $src_cover_img_src = wp_get_attachment_image_src($tmp->cover_image->id, 'large', false);
@@ -330,8 +471,8 @@ class Render_Experience_Reports_Callback_Templates
                 $img_post_src_full = $post_src_full[0];
             }
             if ($attr->customPageAktiv && $attr->selectedPages) {
-                //$permalink = get_permalink( $attr->selectedPages ).'?report-post='.$tmp->post_id;
-                $permalink = get_permalink($attr->selectedPages);
+                $permalink = get_permalink($attr->selectedPages) . '?report-post=' . $tmp->post_id . '&id=' . $attr->randomPageId;
+                // $permalink = get_permalink($attr->selectedPages);
             } else {
                 $permalink = $tmp->permalink;
             }
@@ -350,39 +491,25 @@ class Render_Experience_Reports_Callback_Templates
                 $slider_template->loadMore = false;
             }
 
-            switch ($attr->selectedTemplate) {
-                //JOB Template 1
-                case '1':
-                    $twigData['data'][] = apply_filters($this->basename . '/object_to_array', (array)$slider_template);
-                    try {
-                        $template = $this->twig->render('Template-1.twig', ['data' => $twigData]);
-                    } catch (LoaderError|SyntaxError|RuntimeError|Throwable $e) {
-                        echo '';
-                    }
-                    break;
-                case '2':
-                    $twigData['data'][] = apply_filters($this->basename . '/object_to_array', (array)$slider_template);
-                    try {
-                        $template = $this->twig->render('Template-2.twig', ['data' => $twigData]);
-                    } catch (LoaderError|SyntaxError|RuntimeError|Throwable $e) {
-                        echo '';
-                    }
-                    break;
-                case '3':
-                    $twigData['data'][] = apply_filters($this->basename . '/object_to_array', (array)$slider_template);
-                    try {
-                        $template = $this->twig->render('Template-3.twig', ['data' => $twigData]);
-                    } catch (LoaderError|SyntaxError|RuntimeError|Throwable $e) {
-                        echo '';
-                    }
-                    break;
+            $getTemplate = apply_filters($this->basename . '/get_twig_templates', $attr->selectedTemplate);
+            $twigData['data'][] = apply_filters($this->basename . '/object_to_array', (array)$slider_template);
+            try {
+                $template = $this->twig->render($getTemplate['file'], ['data' => $twigData]);
+            } catch (LoaderError|SyntaxError|RuntimeError|Throwable $e) {
+                echo '';
             }
         }
         if ($loadMore) {
             return preg_replace(array('/<!--(.*)-->/Uis', "/[[:blank:]]+/"), array('', ' '), str_replace(array("\n", "\r", "\t"), '', $template));
         }
+
+        $showCatName = '';
+        if ($attr->showCategoryAktiv) {
+            $showCatName = '<div class="category-title ' . $attr->selectCategoryLabelCss . '">' . $this->get_report_category_name_by_id($attr->selectedCategory) . '</div>';
+        }
         $randContainer = apply_filters($this->basename . '/generate_random_id', 12, 0);
-        $html = '<div class="animate__animated '.$attr->className.' experience-reports-content reports-category-'.$attr->selectedCategory.'" data-id="'.$attr->selectedCategory.'" data-cat-name="'.$this->get_report_category_name_by_id($attr->selectedCategory).'" data-id="' . $randContainer . '" id="report-wrapper-' . $randContainer . '">';
+        $html = '<div class="animate__animated ' . $attr->className . ' experience-reports-content reports-category-' . $attr->selectedCategory . '" data-id="' . $attr->selectedCategory . '" data-cat-name="' . $this->get_report_category_name_by_id($attr->selectedCategory) . '" data-id="' . $randContainer . '" id="report-wrapper-' . $randContainer . '">';
+        $html .= $showCatName;
         $html .= '<div data-id="' . $randContainer . '" id="report-' . $randContainer . '" class="experience-reports-wrapper">';
         $html .= $template;
         $html .= '</div>';
@@ -453,7 +580,10 @@ class Render_Experience_Reports_Callback_Templates
                 'date_to' => $metaData->date_to,
                 'date_to_time' => $metaData->to_time,
                 'date_from_format' => $metaData->date_from_format,
+                'date_from_format_alt' => $metaData->date_from_format_alt,
                 'date_to_format' => $metaData->date_to_format,
+                'date_to_format_alt' => $metaData->date_to_format_alt,
+                'date_separator' => $metaData->date_separator,
                 'date_to_language' => __('to', 'wp-experience-reports-options'),
                 'gallery_image_option' => $metaData->image_option,
                 'gallery_id' => $metaData->gallery_select,
@@ -518,6 +648,7 @@ class Render_Experience_Reports_Callback_Templates
         $record->date_format = get_post_meta($postId, '_experience_reports_date_format', true);
         $record->date_from = get_post_meta($postId, '_experience_reports_from', true);
         $record->date_to = get_post_meta($postId, '_experience_reports_to', true);
+        $record->date_separator = get_post_meta($postId, '_experience_reports_date_separator', true);
 
         $record->image_option = get_post_meta($postId, '_experience_reports_image_option', true);
 
@@ -525,23 +656,28 @@ class Render_Experience_Reports_Callback_Templates
         if ($record->date_from) {
             $date_from_format = apply_filters($this->basename . '/date_format', $record->date_from, $record->date_format);
             if ($date_from_format->status) {
+                $record->date_from_format_alt = apply_filters($this->basename . '/date_format', $record->date_from, 8)->date;
                 $record->date_from_format = $date_from_format->date;
                 $record->from_time = strtotime($record->date_from);
             }
         } else {
             $record->date_from_format = false;
-            $record->from_time = '';
+            $record->date_from_format_alt = false;
+            $record->from_time = false;
         }
 
-        if ($record->date_to) {
+        if (isset($record->date_to) && $record->date_to) {
             $date_to_format = apply_filters($this->basename . '/date_format', $record->date_to, $record->date_format);
+
             if ($date_to_format->status) {
+                $record->date_to_format_alt = apply_filters($this->basename . '/date_format', $record->date_to, 8);
                 $record->date_to_format = $date_to_format->date;
                 $record->to_time = strtotime($record->date_to);
             }
         } else {
             $record->date_to_format = false;
-            $record->to_time = '';
+            $record->date_to_format_alt = false;
+            $record->to_time = false;
         }
 
         $record->cover_image = json_decode($record->cover_image);
@@ -679,7 +815,7 @@ class Render_Experience_Reports_Callback_Templates
     {
         switch ($order) {
             case'1':
-               usort($postArr, fn($a, $b) => $a[$value] - $b[$value]);
+                usort($postArr, fn($a, $b) => $a[$value] - $b[$value]);
                 return array_reverse($postArr);
             case '2':
                 usort($postArr, fn($a, $b) => $a[$value] - $b[$value]);
@@ -689,8 +825,9 @@ class Render_Experience_Reports_Callback_Templates
         return $postArr;
     }
 
-    public function get_report_category_name_by_id( $category_id ) {
-        $term = get_term_by( 'id', $category_id, 'experience_reports_category', 'ARRAY_A' );
+    public function get_report_category_name_by_id($category_id)
+    {
+        $term = get_term_by('id', $category_id, 'experience_reports_category', 'ARRAY_A');
         return $term['name'];
     }
 
@@ -736,17 +873,38 @@ class Render_Experience_Reports_Callback_Templates
     public function make_load_more_button($total, $limit, $postId, $attr, $loaded = 1)
     {
         if ($total == $limit) {
-            return '';
+            return '<div class="report-not-more-button"></div>';
+        }
+
+        $pages = ceil($total / $limit);
+        if ($pages < 2) {
+            return '<div class="report-not-more-button"></div>';
         }
 
         $html = '<div class="report-button-outer-wrapper">
                  <div class="report-load-more-inner-wrapper">
-                 <button data-catId="'.$attr->selectedCategory.'" data-total="' . $total . '" 
+                 <button data-catId="' . $attr->selectedCategory . '" data-total="' . $total . '" 
                   data-limit="' . $limit . '" data-loaded="' . $loaded . '" data-post-id="' . $postId . '" data-method="load-more-action"
-                  class="report-load-more-btn experience-report-actions-button '.$attr->showMoreButtonCss.'">
-                 '.$attr->showMoreButtonIcon.' <span class="button-label">'.$attr->showMoreButtonLabel.'</span>
+                  class="report-load-more-btn experience-report-actions-button ' . $attr->showMoreButtonCss . '">
+                 ' . $attr->showMoreButtonIcon . ' <span class="button-label">' . $attr->showMoreButtonLabel . '</span>
                  </button>
                  </div></div>';
         return preg_replace(array('/<!--(.*)-->/Uis', "/[[:blank:]]+/"), array('', ' '), str_replace(array("\n", "\r", "\t"), '', $html));
+    }
+
+    public function wpdocs_custom_taxonomies_terms_links($postId): array
+    {
+        $out = [];
+        if (!$post = get_post($postId)) {
+            return $out;
+        }
+
+        $post_type = $post->post_type;
+        $taxonomies = get_object_taxonomies($post_type, 'objects');
+        foreach ($taxonomies as $taxonomy_slug => $taxonomy) {
+            $out[] = get_the_terms($post->ID, $taxonomy_slug);
+        }
+
+        return $out;
     }
 }

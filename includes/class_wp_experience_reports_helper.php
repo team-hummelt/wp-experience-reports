@@ -5,6 +5,7 @@ namespace Experience\Reports;
 use DateTime;
 use DateTimeZone;
 use Exception;
+use FilesystemIterator;
 use IntlDateFormatter;
 use stdClass;
 use Wp_Experience_Reports;
@@ -379,7 +380,15 @@ class WP_Experience_Reports_Helper
                 $return->status = true;
                 break;
             case'8':
-                $return->date = date('d\/Y', strtotime($date));
+                $return->date = date('m\/Y', strtotime($date));
+                $return->status = true;
+                break;
+            case'9':
+                $return->date = $this->formatLanguage($dt, 'F', 'de');
+                $return->status = true;
+                break;
+            case'10':
+                $return->date = $this->formatLanguage($dt, 'M', 'de');
                 $return->status = true;
                 break;
             default:
@@ -441,16 +450,140 @@ class WP_Experience_Reports_Helper
         }
     }
 
+    /**
+     * @throws Exception
+     */
+    private function recursive_copy($src, $dst)
+    {
+
+        $dir = opendir($src);
+
+        if (!is_dir($dst)) {
+            if (!mkdir($dst)) {
+                throw new Exception('Destination Ordner nicht gefunden gefunden.');
+            }
+        }
+        while (($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                if (is_dir($src . DIRECTORY_SEPARATOR . $file)) {
+                    $this->recursive_copy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
+                } else {
+                    copy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
+                }
+            }
+        }
+        closedir($dir);
+    }
+
+    public function sync_template_folder(): bool
+    {
+        $srcDir = $this->main->get_twig_template_dir();
+        $destDir = $this->main->get_twig_user_templates();
+        if (!is_dir($destDir)) {
+            mkdir($destDir, 0755, true);
+        }
+        if (!is_dir($destDir)) {
+            return false;
+        }
+        try {
+            $this->recursive_copy($srcDir, $destDir);
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    public function get_plugin_folder($directory, $search = ''): array
+    {
+        $scanned = array_diff(scandir($directory), array('..', '.'));
+        $folderArr = [];
+        foreach ($scanned as $tmp) {
+            if (is_dir($directory . $tmp)) {
+                if ($search) {
+                    if ($search == $tmp) {
+                        return $tmp;
+                    }
+                }
+                $folderArr[] = $tmp;
+            }
+        }
+        return $folderArr;
+    }
+
+    public function getDirectoryList($dir):array {
+        $dirList = $fileList = array();
+        $iter = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
+
+        foreach($iter as $file) {
+            if($file->isDir()) {
+                $dirList[$file->getFilename()] = $this->getDirectoryList($file->getPathname());
+            } else {
+                $fileList[$file->getFilename()] = $file->getFilename();
+            }
+        }
+        uksort($dirList, "strnatcmp");
+        natsort($fileList);
+        return $dirList + $fileList;
+    }
+
+    public function make_twig_templates_option() {
+        $searchDir = $this->main->get_twig_user_templates() . DIRECTORY_SEPARATOR;
+        $twigTemplatesFiles = $this->getDirectoryList($searchDir);
+        $twigTemplates = [];
+        $i=1;
+        foreach ($twigTemplatesFiles as $tmp){
+            if(is_array($tmp)){
+                continue;
+            }
+            $pathInfo = pathinfo($searchDir . $tmp);
+            if(!$pathInfo['extension'] == 'twig'){
+                continue;
+            }
+
+            $id = $this->getERGenerateRandomId(12,0,12);
+            $twig_temp = [
+                'id' => $id,
+                'dir' =>  $searchDir,
+                'file' => $pathInfo['basename'],
+                'name' => $pathInfo['filename'],
+                'is_gallery' => 1
+            ];
+            $twigTemplates[] = $twig_temp;
+            $i++;
+        }
+
+        update_option($this->basename.'_twig_templates', $twigTemplates);
+    }
+
+    public function get_twig_templates($templateId = '') {
+        $templates = get_option($this->basename . '_twig_templates');
+        if($templateId){
+            foreach ($templates as $tmp){
+                if ($tmp['id'] == $templateId){
+                    return $tmp;
+                }
+            }
+        }
+        if($templateId){
+            return [];
+        }
+        return $templates;
+    }
+
     public function get_report_post_attributes($postId, $kategorie): object
     {
 
         $attr = new stdClass();
         $attributes = [];
+        $selAttributes = [];
+        global $post;
         $post = get_post($postId);
         $postAttribute = parse_blocks($post->post_content);
+        //print_r($postAttribute);
         if ($postAttribute) {
             foreach ($postAttribute as $attribute) {
                 if ($attribute['blockName'] == 'wwdh/experience-reports-block') {
+
                     if ($attribute['attrs']['selectedCategory'] == $kategorie) {
                         $attributes = $attribute['attrs'];
                         break;
@@ -459,7 +592,47 @@ class WP_Experience_Reports_Helper
             }
         }
         if (!$attributes) {
-            return $attr;
+            if ($postAttribute) {
+                foreach ($postAttribute as $attribute) {
+                    if ($attribute['innerBlocks']) {
+                        foreach ($attribute['innerBlocks'] as $inner) {
+                            if ($inner['blockName'] == 'wwdh/experience-reports-block') {
+                                if ($inner['attrs']['selectedCategory'] == $kategorie) {
+                                    $attributes = $inner['attrs'];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (!$attributes) {
+                return $attr;
+            }
+        }
+
+        if ($postAttribute) {
+            foreach ($postAttribute as $attribute) {
+                if ($attribute['blockName'] == 'wwdh/experience-reports-filter') {
+                    $selAttributes = $attribute['attrs'];
+                    break;
+                }
+            }
+        }
+
+        if (!$selAttributes) {
+            if ($postAttribute) {
+                foreach ($postAttribute as $attribute) {
+                    if ($attribute['innerBlocks']) {
+                        foreach ($attribute['innerBlocks'] as $inner) {
+                            if ($inner['blockName'] == 'wwdh/experience-reports-filter') {
+                                $selAttributes = $inner['attrs'];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -484,26 +657,44 @@ class WP_Experience_Reports_Helper
         isset($attributes['customPageAktiv']) ? $attr->customPageAktiv = (bool)$attributes['customPageAktiv'] : $attr->customPageAktiv = false;
         isset($attributes['selectedPages']) && $attributes['selectedPages'] ? $attr->selectedPages = (int)$attributes['selectedPages'] : $attr->selectedPages = 0;
 
-        isset($attributes['showPostTitleActive']) && $attributes['showPostTitleActive'] ? $attr->showPostTitleActive = (bool)$attributes['showPostTitleActive'] : $attr->showPostTitleActive = 0;
-        isset($attributes['showPostDateAktiv']) && $attributes['showPostDateAktiv'] ? $attr->showPostDateAktiv = (bool)$attributes['showPostDateAktiv'] : $attr->showPostDateAktiv = 0;
-        isset($attributes['showDateFromToAktiv']) && $attributes['showDateFromToAktiv'] ? $attr->showDateFromToAktiv = (bool)$attributes['showDateFromToAktiv'] : $attr->showDateFromToAktiv = 0;
-        isset($attributes['showCategoryLinkAktiv']) && $attributes['showCategoryLinkAktiv'] ? $attr->showCategoryLinkAktiv = (bool)$attributes['showCategoryLinkAktiv'] : $attr->showCategoryLinkAktiv = 0;
-        isset($attributes['showPostAutorAktiv']) && $attributes['showPostAutorAktiv'] ? $attr->showPostAutorAktiv = (bool)$attributes['showPostAutorAktiv'] : $attr->showPostAutorAktiv = 0;
-        isset($attributes['customCategoryPageAktiv']) && $attributes['customCategoryPageAktiv'] ? $attr->customCategoryPageAktiv = (bool)$attributes['customCategoryPageAktiv'] : $attr->customCategoryPageAktiv = 0;
+        isset($attributes['showPostTitleActive']) ? $attr->showPostTitleActive = (bool)$attributes['showPostTitleActive'] : $attr->showPostTitleActive = 0;
+        isset($attributes['showPostDateAktiv']) ? $attr->showPostDateAktiv = (bool)$attributes['showPostDateAktiv'] : $attr->showPostDateAktiv = 0;
+        isset($attributes['showDateFromToAktiv']) ? $attr->showDateFromToAktiv = (bool)$attributes['showDateFromToAktiv'] : $attr->showDateFromToAktiv = 0;
+        isset($attributes['showCategoryLinkAktiv']) ? $attr->showCategoryLinkAktiv = (bool)$attributes['showCategoryLinkAktiv'] : $attr->showCategoryLinkAktiv = 0;
+        isset($attributes['showPostAutorAktiv']) ? $attr->showPostAutorAktiv = (bool)$attributes['showPostAutorAktiv'] : $attr->showPostAutorAktiv = 0;
+        isset($attributes['customCategoryPageAktiv']) ? $attr->customCategoryPageAktiv = (bool)$attributes['customCategoryPageAktiv'] : $attr->customCategoryPageAktiv = 0;
         isset($attributes['selectedCategoryPages']) && $attributes['selectedCategoryPages'] ? $attr->selectedCategoryPages = (int)$attributes['selectedCategoryPages'] : $attr->selectedCategoryPages = 0;
 
         isset($attributes['dataLoad']) && $attributes['dataLoad'] ? $attr->dataLoad = (int)$attributes['dataLoad'] : $attr->dataLoad = 1;
 
-        isset($attributes['backToOverviewAktiv']) && $attributes['backToOverviewAktiv'] ? $attr->backToOverviewAktiv = (bool)$attributes['backToOverviewAktiv'] : $attr->backToOverviewAktiv = false;
+        isset($attributes['backToOverviewAktiv']) ? $attr->backToOverviewAktiv = (bool)$attributes['backToOverviewAktiv'] : $attr->backToOverviewAktiv = false;
         isset($attributes['selectedBackBtnUrl']) && $attributes['selectedBackBtnUrl'] ? $attr->selectedBackBtnUrl = (int)$attributes['selectedBackBtnUrl'] : $attr->selectedBackBtnUrl = 0;
         isset($attributes['backButtonLabel']) && $attributes['backButtonLabel'] ? $attr->backButtonLabel = (string)$attributes['backButtonLabel'] : $attr->backButtonLabel = '';
         isset($attributes['backButtonCss']) && $attributes['backButtonCss'] ? $attr->backButtonCss = (string)$attributes['backButtonCss'] : $attr->backButtonCss = '';
         isset($attributes['backButtonIcon']) && $attributes['backButtonIcon'] ? $attr->backButtonIcon = (string)$attributes['backButtonIcon'] : $attr->backButtonIcon = '';
-        isset($attributes['catBlockAktiv']) && $attributes['catBlockAktiv'] ? $attr->catBlockAktiv = true : $attr->catBlockAktiv = false;
+        isset($attributes['catBlockAktiv']) && $attributes['catBlockAktiv'] ? (bool)$attr->catBlockAktiv = $attributes['catBlockAktiv'] : $attr->catBlockAktiv = false;
 
         isset($attributes['showMoreButtonLabel']) && $attributes['showMoreButtonLabel'] ? $attr->showMoreButtonLabel = (string)$attributes['showMoreButtonLabel'] : $attr->showMoreButtonLabel = 'mehr anzeigen';
         isset($attributes['showMoreButtonCss']) && $attributes['showMoreButtonCss'] ? $attr->showMoreButtonCss = (string)$attributes['showMoreButtonCss'] : $attr->showMoreButtonCss = 'btn btn-outline-secondary';
         isset($attributes['showMoreButtonIcon']) && $attributes['showMoreButtonIcon'] ? $attr->showMoreButtonIcon = (string)$attributes['showMoreButtonIcon'] : $attr->showMoreButtonIcon = '<i class="bi bi-plus"></i>';
+        isset($attributes['backAnkerLink']) && $attributes['backAnkerLink'] ? $attr->backAnkerLink = (string)$attributes['backAnkerLink'] : $attr->backAnkerLink = '';
+
+        isset($attributes['nextPrevAnkerLink']) && $attributes['nextPrevAnkerLink'] ? $attr->nextPrevAnkerLink = (string)$attributes['nextPrevAnkerLink'] : $attr->nextPrevAnkerLink = '';
+        isset($attributes['nextPrevCss']) && $attributes['nextPrevCss'] ? $attr->nextPrevCss = (string)$attributes['nextPrevCss'] : $attr->nextPrevCss = '';
+        isset($attributes['previousText']) && $attributes['previousText'] ? $attr->previousText = (string)$attributes['previousText'] : $attr->previousText = '';
+        isset($attributes['nextText']) && $attributes['nextText'] ? $attr->nextText = (string)$attributes['nextText'] : $attr->nextText = '';
+        isset($attributes['nextPrevAktiv']) ? $attr->nextPrevAktiv = (bool)$attributes['nextPrevAktiv'] : $attr->nextPrevAktiv = true;
+        isset($attributes['nextPrevAnkerOffset']) && $attributes['nextPrevAnkerOffset'] ? $attr->nextPrevAnkerOffset = (int)$attributes['nextPrevAnkerOffset'] : $attr->nextPrevAnkerOffset = 0;
+        isset($attributes['randomPageId']) && $attributes['randomPageId'] ? $attr->randomPageId = (string)$attributes['randomPageId'] : $attr->randomPageId = '';
+        isset($attributes['backAnkerLinkOffset']) && $attributes['backAnkerLinkOffset'] ? $attr->backAnkerLinkOffset = (int)$attributes['backAnkerLinkOffset'] : $attr->backAnkerLinkOffset = '';
+
+        isset($selAttributes['showCategoryAktiv']) ? $attr->showCategoryAktiv = (bool)$selAttributes['showCategoryAktiv'] : $attr->showCategoryAktiv = false;
+        isset($selAttributes['selectCategoryLabelCss']) && $selAttributes['selectCategoryLabelCss'] ? $attr->selectCategoryLabelCss = (string)$selAttributes['selectCategoryLabelCss'] : $attr->selectCategoryLabelCss = '';
+        isset($selAttributes['disabledCategories']) && $selAttributes['disabledCategories'] ? $attr->disabledCategories = $selAttributes['disabledCategories'] : $attr->disabledCategories = '';
+
+
         return $attr;
     }
+
+
 }

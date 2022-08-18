@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", function (event) {
 
+    //URL Query
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+
     /**========================================================
      ================ AJAX PUBLIC XHR FORMULAR ================
      ==========================================================
@@ -32,6 +37,33 @@ document.addEventListener("DOMContentLoaded", function (event) {
         xhr.send(formData);
     }
 
+    function api_xhr_rest_endpoint_data(data = {},uri,callback) {
+        let xhr = new XMLHttpRequest();
+        let formData = new FormData();
+            if(data){
+                for (let [name, value] of Object.entries(data)) {
+                    formData.append(name, value);
+                }
+            }
+        xhr.open('GET', report_public_obj.rest_url + uri, true);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                if (typeof callback === 'function') {
+                    xhr.addEventListener("load", callback);
+                    return false;
+                }
+            }
+        }
+        xhr.setRequestHeader('X-WP-Nonce', report_public_obj.rest_nonce);
+        xhr.send(formData);
+    }
+
+
+    //api_xhr_rest_endpoint_data({}, 'image-full/'+imgId, report_image_endpoint_callback)
+
+
+
+
     let btnReportsActionButton = document.querySelectorAll('.experience-report-actions-button');
     if (btnReportsActionButton) {
         let nodes = Array.prototype.slice.call(btnReportsActionButton, 0);
@@ -48,7 +80,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         let postId = nodes.getAttribute('data-post-id');
                         let loaded = nodes.getAttribute('data-loaded');
                         let catId = nodes.getAttribute('data-catId');
-                        let parentContainer = nodes.parentElement.parentElement.parentElement;
+                        let parentContainer = nodes.parentElement.parentElement.parentElement.parentElement;
+
                         let wrapper = parentContainer.querySelector('.experience-reports-wrapper');
                         if (wrapper.hasAttributes('data-id')) {
                             wrapperId = wrapper.getAttribute('data-id');
@@ -67,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                         };
                         api_xhr_experience_reports_public_form_data(formData, false, load_more_post_callback)
-
                         break;
                 }
             });
@@ -83,6 +115,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 if (data.showBtn) {
                     moreBtn.setAttribute('data-loaded', data.loaded);
                 } else {
+                    let outerContainer = moreBtn.parentElement.parentElement;
+                    outerContainer.classList.add('report-not-more-button');
                     moreBtn.classList.add('d-none');
                 }
                 wrapperContainer.insertAdjacentHTML('beforeend', data.template);
@@ -90,6 +124,52 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
     }
+
+    let formularAnkerWrapper = document.querySelector('.formular-wrapper');
+    if(formularAnkerWrapper){
+        formularAnkerWrapper.id = 'formular';
+    }
+
+    let getReportCoverImg = new Promise(function (resolve, reject) {
+         let coverImageData = document.querySelector('.has-cover-image');
+         if(coverImageData){
+             let imgId = coverImageData.getAttribute('data-cover-img');
+             let siteContent = document.getElementById('content');
+             if(siteContent){
+
+                 api_xhr_rest_endpoint_data({}, 'image-full/'+imgId, report_image_endpoint_callback)
+                 function report_image_endpoint_callback() {
+                     let data = JSON.parse(this.responseText);
+                     let headerCarousel = document.querySelector('.report-cover');
+                     if(data.status){
+                        if(headerCarousel){
+                             headerCarousel.innerHTML='';
+                             let html = `
+                            <div class="img-full-width">
+                                <img class="bgImage" src="${data.url}" alt="">
+                            </div>`;
+                             headerCarousel.insertAdjacentHTML('afterbegin', html);
+
+                             headerCarousel.classList.remove('opacity-0');
+                             headerCarousel.classList.add('animate__fadeIn')
+                         }
+                     }
+                 }
+             }
+             resolve(imgId);
+         }
+        resolve();
+        reject();
+    });
+
+    getReportCoverImg.then((imgId) => {
+        if(!imgId){
+            let headerCarousel = document.querySelector('.report-cover');
+            if(headerCarousel){
+                headerCarousel.classList.remove('opacity-0')
+            }
+        }
+    });
 
     let selectedChangeKategorie = document.querySelector('.report-change-select');
     if (selectedChangeKategorie) {
@@ -117,6 +197,44 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 });
             }
         });
+    }
+
+    if(urlParams.get('get')){
+         let offset = 110;
+         if(urlParams.get('offset')){
+             offset = urlParams.get('offset');
+         }
+         let isTarget = document.querySelector(urlParams.get('get'));
+         if(isTarget){
+             scrollToContainer(isTarget,offset);
+         }
+        switch (urlParams.get('get')){
+            case 'formular':
+                let formular = document.querySelector('.formular-wrapper');
+                if(formular){
+                   scrollToContainer('.formular-wrapper',offset);
+                }
+                break;
+        }
+    }
+
+    function getOffsetTop(element){
+        let offsetTop = 0;
+        while(element) {
+            offsetTop += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return offsetTop;
+    }
+
+
+    function scrollToContainer(target, offset) {
+        setTimeout(function () {
+            jQuery('html, body').animate({
+                scrollTop: jQuery(target).offset().top - (offset),
+            }, 800, "swing", function () {
+            });
+        }, 1000);
     }
 
     function load_splide_plugin() {

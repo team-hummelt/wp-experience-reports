@@ -1,11 +1,12 @@
 <?php
+
 namespace Experience\Reports;
 
 use finfo;
 use Wp_Experience_Reports;
 use stdClass;
 
-defined( 'ABSPATH' ) or die();
+defined('ABSPATH') or die();
 
 /**
  * Define the Admin AJAX functionality.
@@ -27,7 +28,6 @@ defined( 'ABSPATH' ) or die();
  * @subpackage Wp_Experience_Reports/includes
  * @author     Jens Wiecker <email@jenswiecker.de>
  */
-
 class Experience_Reports_Admin_Ajax
 {
 
@@ -104,7 +104,7 @@ class Experience_Reports_Admin_Ajax
         }
     }
 
-    public function experience_reports_admin_ajax_handle():object
+    public function experience_reports_admin_ajax_handle(): object
     {
         $responseJson = new stdClass();
         $record = new stdClass();
@@ -113,8 +113,8 @@ class Experience_Reports_Admin_Ajax
         switch ($this->method) {
             case'update_er_settings':
                 $responseJson->spinner = true;
-                $userRole   = filter_input( INPUT_POST, 'user_role', FILTER_SANITIZE_STRING );
-                if(!$userRole){
+                $userRole = filter_input(INPUT_POST, 'user_role', FILTER_SANITIZE_STRING);
+                if (!$userRole) {
                     $responseJson->msg = 'Es wurden keine Daten übertragen!';
                     return $responseJson;
                 }
@@ -122,6 +122,60 @@ class Experience_Reports_Admin_Ajax
                 update_option('experience_reports_user_role', $userRole);
                 $responseJson->status = true;
                 $responseJson->msg = date('H:i:s', current_time('timestamp'));
+                break;
+
+            case'update-twig-templates':
+                $checkDescription = function ($array_item) {
+                    return filter_var($array_item, FILTER_SANITIZE_STRING);
+                };
+
+                $templates = array($_POST['bezeichnung']);
+                $templates = array_map($checkDescription, $templates[0]);
+
+                $isGallery = array($_POST['isGallery']);
+                $isGallery = array_map($checkDescription, $isGallery[0]);
+
+                $option = get_option($this->basename . '_twig_templates');
+                $optArr = [];
+                foreach ($option as $tmp) {
+                    if (isset($isGallery['gallery#' . $tmp['id']])) {
+                        $galleryOn = 1;
+                    } else {
+                        $galleryOn = 0;
+                    }
+                    $tmp['name'] = $templates[$tmp['id']];
+                    $tmp['is_gallery'] = $galleryOn;
+                    $optArr[] = $tmp;
+                }
+
+                update_option($this->basename . '_twig_templates', $optArr);
+                $responseJson->status = true;
+                $responseJson->msg = 'gespeichert';
+
+                break;
+            case 'delete_twig_template':
+                $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+                $templates = get_option($this->basename . '_twig_templates');
+                if (!$id) {
+                    $responseJson->msg = 'file not found';
+                    return $responseJson;
+                }
+
+                $optArr = [];
+                foreach ($templates as $tmp) {
+                    if ($tmp['id'] == $id) {
+                        $file = $this->main->get_twig_user_templates() . DIRECTORY_SEPARATOR . $tmp['file'];
+                        if (is_file($file)) {
+                            unlink($file);
+                        }
+                    } else {
+                        $optArr[] = $tmp;
+                    }
+                }
+                update_option($this->basename . '_twig_templates', $optArr);
+                $responseJson->id = $id;
+                $responseJson->status = true;
+                $responseJson->msg = 'gelöscht';
                 break;
         }
 

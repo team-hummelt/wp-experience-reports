@@ -78,6 +78,7 @@ final class Experience_Reports_Database
             $this->install_default_slider();
             //update_create_experience_reports_database
         }
+       // $this->install_default_slider();
     }
 
     private function install_default_slider(){

@@ -11,6 +11,7 @@
  */
 
 use Experience\Reports\Experience_Reports_Admin_Ajax;
+use Experience\Reports\WP_Experience_Reports_Folder_Three;
 use Experience\Reports\WWDH_Api_Ajax;
 use Twig\Environment;
 
@@ -210,6 +211,20 @@ class Wp_Experience_Reports_Admin
     }
 
     /**
+     * Register Experience Reports AJAX ADMIN RESPONSE HANDLE
+     *
+     * @since    1.0.0
+     */
+    public function prefix_ajax_ERFolderThreeHandle(): void
+    {
+        check_ajax_referer('experience_reports_admin_handle');
+        require_once 'ajax/class_wp_experience_reports_folder_three.php';
+        $path = urldecode( $_REQUEST['dir'] );
+        $adminFolderThreeHandle = new WP_Experience_Reports_Folder_Three($this->basename,  $this->main, $path);
+        wp_send_json($adminFolderThreeHandle->create_tree());
+    }
+
+    /**
      * Register BS-Formular2 AJAX API RESPONSE HANDLE
      *
      * @since    1.0.0
@@ -234,6 +249,8 @@ class Wp_Experience_Reports_Admin
             update_option($this->basename.'/wwdh_extension_check', current_time('timestamp'));
         }
     }
+
+
 
     /**
      * Register the Update-Checker for the Plugin.
@@ -309,5 +326,7 @@ class Wp_Experience_Reports_Admin
         wp_enqueue_script($this->basename . '-sweetalert2', plugin_dir_url(__DIR__) . 'includes/tools/sweetalert2/sweetalert2.all.min.js', array(), $this->version, true);
         wp_enqueue_script($this->basename . '-extension', plugin_dir_url(__FILE__) . 'js/wp-experience-reports-extension.js', array('jquery'), $this->version, true);
         wp_enqueue_script($this->basename, plugin_dir_url(__FILE__) . 'js/wp-experience-reports-admin.js', array('jquery'), $this->version, true);
+        wp_enqueue_style($this->basename . '-folder-three', plugin_dir_url(__FILE__) . 'folderTree/filetree.css', array(), $this->version, 'all');
+        wp_enqueue_script($this->basename.'-folder-three', plugin_dir_url(__FILE__) . 'folderTree/folderTree.js', array('jquery'), $this->version, true);
     }
 }

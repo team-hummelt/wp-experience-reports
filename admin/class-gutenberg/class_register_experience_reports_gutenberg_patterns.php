@@ -71,8 +71,8 @@ class Register_Experience_Reports_Gutenberg_Patterns
         register_block_pattern(
             'hupa/team-members-block-pattern',
             [
-                'title' => __('Experience Reports Template one', 'hupa-teams'),
-                'description' => _x('Template one for team members', 'Block pattern description', 'hupa-teams'),
+                'title' => __('Reports Template one', 'wp-experience-report'),
+                'description' => _x('Template one for team members', 'Block pattern description', 'wp-experience-report'),
                 'content' => $patternOne,
                 'categories' => [
                     'wwdh/experience-reports-block-patterns',
@@ -82,9 +82,9 @@ class Register_Experience_Reports_Gutenberg_Patterns
     }
 
 
-    public function get_template_gutenberg_select($templateId = ''): array
+    public function get_template_gutenberg_select($templateId = '')
     {
-        $templates = [
+       /* $templates = [
             '0' => [
                 'id' => 1,
                 'name' => __('Reports Gallery 1 Template', 'wp-experience-reports'),
@@ -103,17 +103,8 @@ class Register_Experience_Reports_Gutenberg_Patterns
                 'file' => 'Template-3.twig',
                 'is_gallery' => false,
             ]
-        ];
+        ];*/
 
-        if($templateId){
-            foreach ($templates as $tmp){
-                if ($tmp['id'] == $templateId){
-                    return $tmp;
-                }
-            }
-        }
-
-        return $templates;
     }
 
     /**
@@ -126,7 +117,7 @@ class Register_Experience_Reports_Gutenberg_Patterns
         register_block_pattern_category(
             'hupa/member-block-patterns',
             [
-                'label' => __('Team Members Patterns', 'wp-experience-reports'),
+                'label' => __('InterEd Patterns', 'wp-experience-reports'),
             ]
         );
     }

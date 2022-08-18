@@ -1,7 +1,8 @@
-<div class="report-post-info pb-3">
+<div {% if d.cover_img_id %}data-cover-img="{{ d.cover_img_id }}"{% endif%} class="{% if d.cover_img_id %}has-cover-image{% endif%} report-post-info pb-3">
     {% if d.attr.backToOverviewAktiv %}
         <div class="report-post-back-url py-4">
-            <a class="{{ d.attr.backButtonCss }}" href="{{ d.cat_url }}">
+            <a class="{{ d.attr.backButtonCss }}"
+               href="{{ d.back_url }}{% if d.attr.backAnkerLink %}?get={{ d.attr.backAnkerLink }}{% if d.attr.backAnkerLinkOffset %}&offset={{d.attr.backAnkerLinkOffset}}{% endif %}{% endif %}">
                 {% autoescape false %}
                     {{ d.attr.backButtonIcon }} {{ d.attr.backButtonLabel }}
                 {% endautoescape %}
@@ -17,19 +18,19 @@
     {% endif %}
     {% if d.showPostDateAktiv %}
         <time class="entry-date published small">
-            {{ d.posted_on_lang }}
+           <span class="posted-on">{{ d.posted_on_lang }}</span>
             <span class="report-post-author fw-normal">{{ d.date }}</span>
         </time>
     {% endif %}
     {% if d.showPostAutorAktiv %}
         <span class="report-post-autor-wrapper small">
-        {{ d.by_lang }}
+        <span class="author-lang">{{ d.by_lang }}</span>
         <span class="report-post-author pt-2 fw-normal">{{ d.author }} </span>
             </span>
     {% endif %}
 
     {% if d.showPostTitleActive %}
-        <h5 class="report-post-title lh-1 pt-3 mb-1">{{ d.title }}</h5>
+        <h5 class="report-post-title lh-1 pt-3 mb-1">{% autoescape false %}{{ d.title }}{% endautoescape %}</h5>
     {% endif %}
     {% if d.showDateFromToAktiv %}
         <div class="report-post-from-date fst-normal small pb-2">
@@ -39,7 +40,7 @@
             </i>
             {% if d.date_to_format %}
                 <span class="report-post-date-from">
-            {{ d.date_to_language }} <i class="fw-normal">{{ d.date_to_format }}</i>
+                    <span class="date-on">{{ d.date_to_language }}</span> <i class="fw-normal">{{ d.date_to_format }}</i>
                 </span>
             {% endif %}
         </div>
