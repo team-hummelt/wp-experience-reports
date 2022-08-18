@@ -215,6 +215,9 @@ class Wp_Experience_Reports
         $this->api_dir = WP_EXPERIENCE_REPORTS_API_DIR;
 
         $this->twig_user_templates = ABSPATH.'report-templates';
+        if(!is_dir( $this->twig_user_templates)){
+            mkdir( $this->twig_user_templates, 0777, true);
+        }
 
 
         $this->check_dependencies();
@@ -621,7 +624,7 @@ class Wp_Experience_Reports
             $postTypes = new Wp_Experience_Reports_Activator();
             $this->loader->add_action('init', $postTypes, 'register_experience_reports_post_type');
             $this->loader->add_action('init', $postTypes, 'register_experience_taxonomies');
-
+            $this->loader->add_action('init', $postTypes, 'register_experience_report_design_vorlagen_post_types');
 
             $this->loader->add_action('init', $plugin_admin, 'set_experience_reports_update_checker');
             $this->loader->add_action('in_plugin_update_message-' . $this->plugin_name . '/' . $this->plugin_name . '.php', $plugin_admin, 'experience_reports_show_upgrade_notification', 10, 2);
@@ -715,8 +718,8 @@ class Wp_Experience_Reports
     private function register_gutenberg_patterns() {
         $registerPatterns = new Register_Experience_Reports_Gutenberg_Patterns($this->get_plugin_name(), $this->get_version(), $this->main);
 
-        //$this->loader->add_action( 'init', $registerPatterns, 'register_block_pattern_category' );
-        //$this->loader->add_action( 'init', $registerPatterns, 'register_gutenberg_patterns' );
+        $this->loader->add_action( 'init', $registerPatterns, 'register_gutenberg_patterns' );
+        $this->loader->add_action( 'init', $registerPatterns, 'register_block_pattern_category' );
         $this->loader->add_filter( $this->plugin_name . '/get_template_select', $registerPatterns, 'get_template_gutenberg_select' );
     }
 

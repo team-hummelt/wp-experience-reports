@@ -32,6 +32,8 @@ class Wp_Experience_Reports_Activator {
 	public static function activate() {
         self::register_experience_reports_post_type();
         self::register_experience_taxonomies();
+        self::register_experience_report_design_vorlagen_post_types();
+      //  self::register_experience_report_design_vorlagen_taxonomies();
         flush_rewrite_rules();
 	}
 
@@ -73,6 +75,7 @@ class Wp_Experience_Reports_Activator {
                 'taxonomies' => array('experience_reports_category'),
             )
         );
+
     }
 
     /**
@@ -121,6 +124,43 @@ class Wp_Experience_Reports_Activator {
         }
     }
 
+    public static function register_experience_report_design_vorlagen_post_types(): void
+    {
+
+        register_post_type(
+            'experience_designs',
+            array(
+                'labels' => array(
+                    'name' => __('Reports Designs', 'wp-experience-reports'),
+                    'singular_name' => __('Report Posts', 'wp-experience-reports'),
+                    'edit_item' => __('Edit Report Post', 'wp-experience-reports'),
+                    'all_items' => __('all Reports', 'wp-experience-reports'),
+                    'items_list_navigation' => __('Report Posts navigation', 'wp-experience-reports'),
+                    'add_new_item' => __('Add new post', 'wp-experience-reports'),
+                    'archives' => __('Report Posts Archives', 'wp-experience-reports'),
+                ),
+                'public' => true,
+                'publicly_queryable' => true,
+                'show_in_rest' => true,
+                'show_ui' => true,
+                'show_in_menu' => true,
+                'has_archive' => true,
+                'query_var' => true,
+                'show_in_nav_menus' => true,
+                'exclude_from_search' => false,
+                'hierarchical' => true,
+                'capability_type' => 'post',
+                'menu_icon' => self::get_svg_icons('journal'),
+                'menu_position' => 31,
+                'supports' => array(
+                    'title', 'excerpt', 'page-attributes', 'author', 'editor', 'thumbnail','custom-fields'
+                ),
+              //  'taxonomies' => array('experience_reports_category'),
+            )
+        );
+    }
+
+
     /**
      * @param $name
      *
@@ -129,6 +169,12 @@ class Wp_Experience_Reports_Activator {
     private static function get_svg_icons($name): string {
         $icon = '';
         switch ($name){
+            case'journal':
+                $icon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-sidebar-reverse" viewBox="0 0 16 16">
+                         <path d="M12.5 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm0 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm.5 3.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/>
+                         <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2zM4 1v14H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h2zm1 0h9a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5V1z"/>
+                         </svg>';
+                break;
             case'personen':
                 $icon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
                          <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>

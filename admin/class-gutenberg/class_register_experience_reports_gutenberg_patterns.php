@@ -79,32 +79,36 @@ class Register_Experience_Reports_Gutenberg_Patterns
                 ],
             ],
         );
-    }
 
+        $args = array(
+            'posts_per_page'   => -1,
+            'orderby'          => 'menu_order',
+            'order'            => 'ASC',
+            'post_type'        => 'experience_designs',
+            'post_status'      => 'publish',
+            'suppress_filters' => true
+        );
 
-    public function get_template_gutenberg_select($templateId = '')
-    {
-       /* $templates = [
-            '0' => [
-                'id' => 1,
-                'name' => __('Reports Gallery 1 Template', 'wp-experience-reports'),
-                'file' => 'Template-1.twig',
-                'is_gallery' => true,
-            ],
-            '1' => [
-                'id' => 2,
-                'name' => __('Reports Banner 4 Spalten', 'wp-experience-reports'),
-                'file' => 'Template-2.twig',
-                'is_gallery' => false,
-            ],
-            '3' => [
-                'id' => 3,
-                'name' => __('Reports Banner 2 Spalten', 'wp-experience-reports'),
-                'file' => 'Template-3.twig',
-                'is_gallery' => false,
-            ]
-        ];*/
+        $items = get_posts( $args );
 
+        foreach ( $items as $item ) {
+            $ID = $item->ID;
+            $content = get_post_field( 'post_content', $ID );
+            $title = $item->post_title." Vorlage";
+            $slug = $item->post_name."-pattern";
+
+            register_block_pattern(
+                $slug,
+                array(
+                    'title'       => $title,
+                    'description' => 'Experience Report Vorlagen',
+                    'content'     => $content,
+                    'categories' => [
+                        'hupa/experience-report-block-patterns',
+                    ],
+                )
+            );
+        }
     }
 
     /**
@@ -115,9 +119,9 @@ class Register_Experience_Reports_Gutenberg_Patterns
     public function register_block_pattern_category()
     {
         register_block_pattern_category(
-            'hupa/member-block-patterns',
+            'hupa/experience-report-block-patterns',
             [
-                'label' => __('InterEd Patterns', 'wp-experience-reports'),
+                'label' => __('Experience-Report', 'wp-experience-reports'),
             ]
         );
     }
